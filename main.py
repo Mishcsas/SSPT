@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import subprocess
+import time
 
 app = Flask(__name__)
 
@@ -22,12 +23,12 @@ def check():
     if language == 'python':
         with open('user/code.py', 'w') as file:
             file.write(code)
+            file.close()
     else:
         with open('user/code.cpp', 'w') as file:
             file.write(code)
-
+            file.close()
     subprocess.run(['python3', 'checker.py'])
-
     with open('user/res.txt', 'r') as file:
         return file.read()
 
@@ -35,4 +36,4 @@ def check():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=1) #Если стоит дебаг то код на питоне не работает

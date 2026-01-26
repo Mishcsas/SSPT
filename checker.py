@@ -21,7 +21,6 @@ def run(i):
             start = time.time()
             if language == 'python':
                 ret = subprocess.run(['python3', 'user/code.py'], stdin=input_file, stdout=out_file, stderr=error_file, timeout=max(2, time_limit), preexec_fn=set_limits)
-                ret = subprocess.run(['user/code.out'], stdin=input_file, stdout=out_file, stderr=error_file, timeout=max(2, time_limit), preexec_fn=set_limits)
             else:
                 ret = subprocess.run(['user/code.out'], stdin=input_file, stdout=out_file, stderr=error_file, timeout=max(2, time_limit), preexec_fn=set_limits)
             end = time.time()
@@ -38,9 +37,10 @@ def check():
     cnt = 0
     for i in range(1, 101):
         res = run(i)
-        if (res != 0) :
+        if (res != 0):
+            print(res)
             return res
-        with open('user/out.txt','r') as user, open(f'{path}ans/{i}.txt', 'r') as ans:
+        with open('user/out.txt', 'r') as user, open(f'{path}ans/{i}.txt', 'r') as ans:
             if (user.read() == ans.read()):
                 cnt+=1
             else:
@@ -61,8 +61,9 @@ def main():
         with open('user/res.txt', 'w') as file:
             file.write('Ошибка компиляции')
     else:
-        with open('user/res.txt', 'w') as file:
+        with open('user/res.txt', 'w', encoding="utf-8") as file:
             res = check()
+            print(res)
             file.write(str(res))
 
 
