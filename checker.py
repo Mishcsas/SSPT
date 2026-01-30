@@ -61,7 +61,7 @@ def main():
         with open('user/res.txt', 'w') as file:
             file.write('Ошибка компиляции')
     else:
-        with open('user/res.txt', 'w', encoding="utf-8") as file:
+        with open('user/res.txt', 'w') as file:
             res = check()
             print(res)
             file.write(str(res))
