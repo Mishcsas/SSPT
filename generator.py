@@ -29,4 +29,3 @@ def generate():
 path = 'tasks/contest1/A'
 
 generate()
-retest()
