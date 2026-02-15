@@ -282,7 +282,7 @@
     <div class="container">
         <!-- Название задачи + ограничения -->
         <div class="title-section">
-            <div class="task-name">A + B · A - B · A * B</div>
+            <div class="task-name">A + B</div>
             <div class="limits">
                 <span class="limits-item"><span class="tag">2 секунды</span></span>
                 <span class="limits-item"><span class="tag">256 МБ</span></span>
@@ -293,9 +293,9 @@
 
         <!-- Текст условия -->
         <div class="problem-text">
-            На вход подаются два целых числа. Выведите их сумму, разность и произведение, каждое на новой строке.<br>
+            На вход подаются два целых числа A и B. Выведите их сумму.<br>
             <br>
-            <span style="color: #2a4d7c;">* Дополнительно: обратите внимание на переполнение при работе с большими числами в C++.</span>
+            <span style="color: #2a4d7c;">Гарантируется что A < 10<sup>5</sup>, B < 10<sup>5</sup></span>
         </div>
 
         <!-- Два теста -->
@@ -307,17 +307,17 @@
                 </div>
                 <div class="test-content">
                     <div class="input-line"><span class="label">вход</span><span class="value">12 7</span></div>
-                    <div class="output-line"><span class="label">выход</span><span class="value">19<br>5<br>84</span></div>
+                    <div class="output-line"><span class="label">выход</span><span class="value">19</span></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-header">
                     <span class="badge">Тест 2</span>
-                    <span>граничный</span>
+                    <span>пример</span>
                 </div>
                 <div class="test-content">
                     <div class="input-line"><span class="label">вход</span><span class="value">-100 5</span></div>
-                    <div class="output-line"><span class="label">выход</span><span class="value">-95<br>-105<br>-500</span></div>
+                    <div class="output-line"><span class="label">выход</span><span class="value">-95</span></div>
                 </div>
             </div>
         </div>
@@ -377,5 +377,39 @@
             reader.readAsText(file);
         });
     </script>
+
+    <script>
+    document.getElementById('submit-form').onsubmit = async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        // Создаем или находим div для результатов
+        let resultDiv = document.getElementById('result');
+        if (!resultDiv) {
+            resultDiv = document.createElement('div');
+            resultDiv.id = 'result';
+            resultDiv.style.marginTop = '20px';
+            resultDiv.style.padding = '15px';
+            resultDiv.style.background = '#f0f0f0';
+            resultDiv.style.border = '1px solid #ccc';
+            resultDiv.style.borderRadius = '5px';
+            resultDiv.style.whiteSpace = 'pre-wrap';
+            resultDiv.style.fontFamily = 'monospace';
+            this.parentNode.insertBefore(resultDiv, this.nextSibling);
+        }
+        
+        resultDiv.textContent = 'Проверка...';
+        
+        const response = await fetch('/check', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const text = await response.text();
+        resultDiv.textContent = text;
+    };
+    </script>
+
 </body>
 </html>
