@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контест 1 - Задачи</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        
+        .back-link {
+            color: white;
+            text-decoration: none;
+            background-color: #555;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .back-link:hover {
+            background-color: #666;
+        }
+        
+        nav {
+            background-color: #444;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #555;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        nav a:hover {
+            background-color: #666;
+        }
+        
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contest-info {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .tasks-list {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .tasks-list h2 {
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        .task-item {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid #333;
+        }
+        
+        .task-item a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .task-item a:hover {
+            color: #666;
+        }
+        
+        .task-desc {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-top: 8px;
+        }
+        
+        .easy {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .medium {
+            background-color: #FF9800;
+            color: white;
+        }
+        
+        .hard {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Контест 1: Основы программирования</h1>
+        <a href="/" class="back-link">← На главную</a>
+    </header>
+    
+    <nav>
+        <a href="/contest1">Контест 1</a>
+        <a href="/contest2">Контест 2</a>
+        <a href="/contest3">Контест 3</a>
+        <a href="/contest4">Контест 4</a>
+        <a href="/contest5">Контест 5</a>
+    </nav>
+    
+    <main>
+        <div class="contest-info">
+            <h3>Контест 1: Основы программирования</h3>
+            <p>5 задач · Языки: любой · Сложность: начальный уровень</p>
+        </div>
+        
+        <div class="tasks-list">
+            <h2>📋 Список задач:</h2>
+            
+            <!-- Задача A -->
+            <div class="task-item">
+                <a href="/contest1/A">A. Выведи сумму</a>
+                <div class="task-desc">Даны два числа, выведите их сумму</div>
+                <span class="difficulty easy">легко</span>
+            </div>
+            
+            <!-- Задача B -->
+            <div class="task-item">
+                <a href="/contest1/B">B. Четное или нечетное</a>
+                <div class="task-desc">Проверьте, является ли число четным</div>
+                <span class="difficulty easy">легко</span>
+            </div>
+            
+            <!-- Задача C -->
+            <div class="task-item">
+                <a href="/contest1/C">C. Максимум из трех</a>
+                <div class="task-desc">Найдите максимальное из трех чисел</div>
+                <span class="difficulty medium">средне</span>
+            </div>
+            
+            <!-- Задача D -->
+            <div class="task-item">
+                <a href="/contest1/D">D. Таблица умножения</a>
+                <div class="task-desc">Выведите таблицу умножения для числа N</div>
+                <span class="difficulty medium">средне</span>
+            </div>
+            
+            <!-- Задача E -->
+            <div class="task-item">
+                <a href="/contest1/E">E. Факториал числа</a>
+                <div class="task-desc">Вычислите факториал числа</div>
+                <span class="difficulty hard">сложно</span>
+            </div>
+        </div>
+    </main>
+    
+    <footer style="background-color: #333; color: white; padding: 10px; text-align: center; margin-top: 20px;">
+        <p>© 2024 Решение задач по программированию</p>
+    </footer>
+</body>
+</html>

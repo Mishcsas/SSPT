@@ -1,13 +1,14 @@
 import subprocess
 import resource
 import time
+import json
 
 time_limit = 1
 memory_limit = 256 * 1024 * 1024
 path = 'tasks/contest1/A/'
 language = 'cpp'
 
-def set_limits(): #Установка лимита на время
+def set_limits(): #Установка лимита на память
     resource.setrlimit(resource.RLIMIT_AS, (memory_limit, memory_limit))
 
 def compilate(): #Компиляция кода
@@ -38,10 +39,9 @@ def check():
     for i in range(1, 101):
         res = run(i)
         if (res != 0): #Проверка на ошибки запуска кода
-            print(res)
             return res
         with open('user/out.txt', 'r') as user, open(f'{path}ans/{i}.txt', 'r') as ans: #Проверка на совпадение ответов
-            if (user.read() == ans.read()):
+            if (user.read().strip() == ans.read().strip()): #За счет strip можно игнорировать пробелы(опасно для точных тестов)
                 cnt+=1
             else:
                 with open(f'{path}test/{i}.txt', 'r') as file:
@@ -52,17 +52,16 @@ def check():
 
 def main():
     global language, path, memory_limit, time_limit
-    with open(path + 'limits.txt', 'r') as file: #Получает из файла лимитов [ограничения по времени, ограничение по памяти]
-        time_limit = int(file.readline().strip())
-        memory_limit = int(file.readline().strip())
+    with open(path + 'limits.json', 'r') as file: #Получает из файла лимитов [ограничения по времени, ограничение по памяти]
+        data = json.load(file) #получает данные из файла и преобразует их в словарь
+        time_limit = data.get('time')
+        memory_limit = data.get('memory')
     if (language == 'cpp' and compilate() != 0): #Компилирует если язык c++ и сразу проверяет на ошибку компиляции
-        with open('user/res.txt', 'w') as file:
-            file.write('Ошибка компиляции')
+        print('Ошибка компиляции')
     else:
-        with open('user/res.txt', 'w') as file: #Открывает файл и записывает в него результат тестов
-            res = check()
-            print(res)
-            file.write(str(res))
+        res = check() #Получает результат тестов
+        print(res)
+        
 
 language = input()
 path = input()

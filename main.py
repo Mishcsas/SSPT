@@ -10,9 +10,14 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/user')
-def get_user():
-    return render_template('index.html')
+@app.route('/<contest>')
+def contest(contest):
+    return render_template(f'{contest}.html') 
+
+@app.route('/<contest>/<num>')
+def task(contest, num):
+    print(contest)
+    return render_template(f'{contest + num}.html') 
 
 
 @app.route('/check', methods=['POST'])
@@ -28,12 +33,13 @@ def check():
         with open('user/code.cpp', 'w') as file:
             file.write(code)
             file.close()
-    subprocess.run(['python3', 'checker.py'], input=f"{language}\n{path}\n", text=True)
-    with open('user/res.txt', 'r') as file:
-        return file.read()
+    res = subprocess.run(['python3', 'checker.py'], input=f"{language}\n{path}\n", text=True, capture_output=True)
+    out = res.stdout
+    print(out)
+    return out
 
 
 
 
 if __name__ == "__main__":
-    app.run(debug=0) #Если стоит дебаг то код на питоне не работает
+    app.run(debug=1) #Если стоит дебаг то код на питоне не работает
