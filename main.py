@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request
 import subprocess
-import time
+import json
 
 app = Flask(__name__)
+user_data = dict() 
 
+def init(): #Делаем инициацию данных
+    global user_data
+    with open('user_data.json') as file: #Получаем данные пользователей
+        user_data = json.load(file)
 
 @app.route('/')
 def index():
@@ -16,8 +21,7 @@ def contest(contest):
 
 @app.route('/<contest>/<num>')
 def task(contest, num):
-    print(contest)
-    return render_template(f'{contest + num}.html') 
+    return render_template(f'{contest + num}.html')
 
 
 @app.route('/check', methods=['POST'])
@@ -42,4 +46,5 @@ def check():
 
 
 if __name__ == "__main__":
+    init()
     app.run(debug=1) #Если стоит дебаг то код на питоне не работает
