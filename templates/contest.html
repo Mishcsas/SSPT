@@ -25,18 +25,22 @@
         }
         
         .back-link {
-            color: white;
-            text-decoration: none;
-            background-color: #555;
-            padding: 5px 15px;
-            border-radius: 5px;
-            font-size: 0.8em;
-            display: inline-block;
-            margin-top: 10px;
-        }
-        
-        .back-link:hover {
+            position: fixed;
+            top: 20px;
+            left: 20px;
             background-color: #666;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            font-size: 1em;
+            margin-top: 0;
+        }
+            
+        .back-link:hover {
+            background-color: #777;
         }
         
         nav {
@@ -137,7 +141,7 @@
 </head>
 <body>
     <header>
-        <h1>Контест 1: Основы программирования</h1>
+        <h1>{{contest_name}}</h1>
         <a href="/" class="back-link">← На главную</a>
     </header>
     
@@ -151,8 +155,8 @@
     
     <main>
         <div class="contest-info">
-            <h3>Контест 1: Основы программирования</h3>
-            <p>5 задач · Языки: любой · Сложность: начальный уровень</p>
+            <h3>{{contest_name}}</h3>
+            <p>{{contest_info}}</p>
         </div>
         
         <div class="tasks-list">
@@ -160,43 +164,43 @@
             
             <!-- Задача A -->
             <div class="task-item">
-                <a href="/contest1/A">A. Выведи сумму</a>
-                <div class="task-desc">Даны два числа, выведите их сумму</div>
+                <a href={{A_ref}}>{{A}}</a>
+                <div class="task-desc">{{A_info}}</div>
                 <span class="difficulty easy">легко</span>
             </div>
             
             <!-- Задача B -->
             <div class="task-item">
-                <a href="/contest1/B">B. Четное или нечетное</a>
-                <div class="task-desc">Проверьте, является ли число четным</div>
+                <a href={{B_ref}}>{{B}}</a>
+                <div class="task-desc">{{B_info}}</div>
                 <span class="difficulty easy">легко</span>
             </div>
             
             <!-- Задача C -->
             <div class="task-item">
-                <a href="/contest1/C">C. Максимум из трех</a>
-                <div class="task-desc">Найдите максимальное из трех чисел</div>
+                <a href={{C_ref}}>{{C}}</a>
+                <div class="task-desc">{{C_info}}</div>
                 <span class="difficulty medium">средне</span>
             </div>
             
             <!-- Задача D -->
             <div class="task-item">
-                <a href="/contest1/D">D. Таблица умножения</a>
-                <div class="task-desc">Выведите таблицу умножения для числа N</div>
+                <a href={{D_ref}}>{{D}}</a>
+                <div class="task-desc">{{D_info}}</div>
                 <span class="difficulty medium">средне</span>
             </div>
             
             <!-- Задача E -->
             <div class="task-item">
-                <a href="/contest1/E">E. Факториал числа</a>
-                <div class="task-desc">Вычислите факториал числа</div>
+                <a href={{E_ref}}>{{E}}</a>
+                <div class="task-desc">{{E_info}}</div>
                 <span class="difficulty hard">сложно</span>
             </div>
         </div>
     </main>
     
     <footer style="background-color: #333; color: white; padding: 10px; text-align: center; margin-top: 20px;">
-        <p>© 2024 Решение задач по программированию</p>
+        <p>© 2026 Решение задач по программированию</p>
     </footer>
 </body>
 </html>

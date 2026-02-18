@@ -52,10 +52,11 @@ def check():
 
 def main():
     global language, path, memory_limit, time_limit
-    with open(path + 'limits.json', 'r') as file: #Получает из файла лимитов [ограничения по времени, ограничение по памяти]
+    with open(path + 'condition_task.json', 'r') as file: #Получает из файла лимитов [ограничения по времени, ограничение по памяти]
         data = json.load(file) #получает данные из файла и преобразует их в словарь
-        time_limit = data.get('time')
-        memory_limit = data.get('memory')
+        time_limit = int(data.get('time_limit').split()[0])
+        memory_limit = int(data.get('memory_limit').split()[0])
+        memory_limit *= 1024 * 1024 #Перевод в байты
     if (language == 'cpp' and compilate() != 0): #Компилирует если язык c++ и сразу проверяет на ошибку компиляции
         print('Ошибка компиляции')
     else:

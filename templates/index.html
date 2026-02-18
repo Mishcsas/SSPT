@@ -11,6 +11,9 @@
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
         /* Шапка сайта */
@@ -19,12 +22,31 @@
             color: white;
             padding: 20px;
             text-align: center;
+            position: relative;
         }
         
         /* Название сайта */
         h1 {
             margin: 0;
             font-size: 2.5em;
+        }
+        
+        /* Кнопка входа */
+        .login-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #45a049;
         }
         
         /* Меню с контестами */
@@ -53,6 +75,7 @@
         main {
             padding: 20px;
             text-align: center;
+            flex: 1;
         }
         
         /* Приветственный текст */
@@ -99,13 +122,51 @@
         .contest-list a:hover {
             background-color: #e0e0e0;
         }
+        
+        /* Информация о пользователе (если залогинен) */
+        .user-info {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+        
+        .user-info a {
+            color: #333;
+            text-decoration: none;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+        
+        .user-info a:hover {
+            background: #e0e0e0;
+        }
     </style>
 </head>
 <body>
-    <!-- Шапка с названием сайта -->
+    <!-- Шапка с названием сайта и кнопкой входа -->
     <header>
         <h1>⚡ Решай задачи по программированию ⚡</h1>
+        
+        <!-- Кнопка входа (будет показываться если пользователь не залогинен) -->
+        {% if not username %}
+            <a href="/login" class="login-btn">🔑 Войти</a>
+        {% endif %}
     </header>
+    
+    <!-- Информация о пользователе (если залогинен) -->
+    {% if username %}
+        <div style="text-align: center; margin-top: 20px;">
+            <div class="user-info">
+                👤 Привет, {{ username }}! 
+                <a href="/logout">Выйти</a>
+            </div>
+        </div>
+    {% endif %}
     
     <!-- Меню для выбора контеста -->
     <nav>
@@ -120,7 +181,11 @@
     <main>
         <div class="welcome">
             <h2>Добро пожаловать!</h2>
-            <p>Здесь вы можете решать задачи по программированию.</p>
+            {% if username %}
+                <p>Рады видеть вас снова, {{ username }}!</p>
+            {% else %}
+                <p>Пожалуйста, <a href="/login" style="color: #4CAF50;">войдите</a>, чтобы начать решать задачи.</p>
+            {% endif %}
             <p>Выберите контест из меню выше или из списка ниже:</p>
         </div>
         
@@ -137,9 +202,9 @@
         </div>
     </main>
     
-    <!-- Подвал сайта (необязательно) -->
-    <footer style="background-color: #333; color: white; padding: 10px; text-align: center; margin-top: 20px;">
-        <p>© 2024 Решение задач по программированию</p>
+    <!-- Подвал сайта -->
+    <footer style="background-color: #333; color: white; padding: 10px; text-align: center;">
+        <p>© 2026 Решение задач по программированию</p>
     </footer>
 </body>
 </html>

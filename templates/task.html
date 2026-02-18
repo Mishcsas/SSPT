@@ -276,16 +276,69 @@
             font-size: 0.9rem;
             text-align: right;
         }
+        .solved-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-left: 20px;
+            border: 1px solid #27ae60;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .back-to-contest {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #4a5f7a;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s;
+            border: 1px solid #5d7a9c;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+.back-to-contest:hover {
+    background: #1d3b61;
+}
+
+.back-to-contest:before {
+    content: "←";
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
     </style>
 </head>
 <body>
     <div class="container">
+        <a href="/{{ contest }}" class="back-to-contest">К списку задач</a>
         <!-- Название задачи + ограничения -->
         <div class="title-section">
-            <div class="task-name">A + B</div>
+            <div class="task-header">
+                <div class="task-name">{{ name }}</div>
+                {% if is_solved == "1" %}
+                    <div class="solved-badge">✓ ЗАДАЧА РЕШЕНА</div>
+                {% endif %}
+            </div>
             <div class="limits">
-                <span class="limits-item"><span class="tag">2 секунды</span></span>
-                <span class="limits-item"><span class="tag">256 МБ</span></span>
+                <span class="limits-item"><span class="tag">{{time_limit}}</span></span>
+                <span class="limits-item"><span class="tag">{{memory_limit}}</span></span>
                 <span class="limits-item"><span class="tag">стандартный ввод</span></span>
                 <span class="limits-item"><span class="tag">стандартный вывод</span></span>
             </div>
@@ -293,9 +346,7 @@
 
         <!-- Текст условия -->
         <div class="problem-text">
-            На вход подаются два целых числа A и B. Выведите их сумму.<br>
-            <br>
-            <span style="color: #2a4d7c;">Гарантируется что A < 10<sup>5</sup>, B < 10<sup>5</sup></span>
+            {{ condition|safe }}
         </div>
 
         <!-- Два теста -->
@@ -306,8 +357,8 @@
                     <span>пример</span>
                 </div>
                 <div class="test-content">
-                    <div class="input-line"><span class="label">вход</span><span class="value">12 7</span></div>
-                    <div class="output-line"><span class="label">выход</span><span class="value">19</span></div>
+                    <div class="input-line"><span class="label">вход</span><span class="value">{{ sample_in_1 }}</span></div>
+                    <div class="output-line"><span class="label">выход</span><span class="value">{{ sample_out_1 }}</span></div>
                 </div>
             </div>
             <div class="test-card">
@@ -316,8 +367,8 @@
                     <span>пример</span>
                 </div>
                 <div class="test-content">
-                    <div class="input-line"><span class="label">вход</span><span class="value">-100 5</span></div>
-                    <div class="output-line"><span class="label">выход</span><span class="value">-95</span></div>
+                    <div class="input-line"><span class="label">вход</span><span class="value">{{ sample_in_2 }}</span></div>
+                    <div class="output-line"><span class="label">выход</span><span class="value">{{ sample_out_2 }}</span></div>
                 </div>
             </div>
         </div>
@@ -325,7 +376,8 @@
         <!-- Форма отправки на /check -->
         <form id="submit-form" action="/check" method="POST">
             <!-- Выбор языка и загрузка файла -->
-            <input type="hidden" name="path" value="tasks/contest1/A/">
+            <input type="hidden" name="contest" value={{contest}}>
+            <input type="hidden" name="num" value={{num}}>
             <div class="toolbar">
                 <div class="lang-group">
                     <label>Язык</label>
@@ -353,7 +405,7 @@
             </div>
         </form>
         
-        <div class="footnote">поле пустое · можно загрузить файл · данные уходят на /check</div>
+        <div class="footnote">Я разраб</div>
     </div>
 
     <script>
@@ -408,6 +460,9 @@
         
         const text = await response.text();
         resultDiv.textContent = text;
+        if (text.trim() === '100') {
+            location.reload()
+        }
     };
     </script>
 
