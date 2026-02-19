@@ -2,36 +2,38 @@ import subprocess
 import resource
 import time
 import json
+import os
 
 time_limit = 1
 memory_limit = 256 * 1024 * 1024
 path = 'tasks/contest1/A/'
 language = 'cpp'
 
-def set_limits(): #Установка лимита на память
-    resource.setrlimit(resource.RLIMIT_AS, (memory_limit, memory_limit))
+def set_limits(): #Установка лимитов(запускает дочерний процесс перед запуском основного)
+    resource.setrlimit(resource.RLIMIT_AS, (memory_limit, memory_limit)) #Огранчиения на память
+    resource.setrlimit(resource.RLIMIT_CPU, (time_limit + 1, time_limit + 1)) #Ограничения на время
+    resource.setrlimit(resource.RLIMIT_NPROC, (3, 3)) #Ограничение на количество процессов
+    os.umask(0o777) #Запрет на запись файлов
+    os.environ.clear() #Очистка переменных окружения
 
 def compilate(): #Компиляция кода
-    with open('user/error.txt', 'w') as error_file:
-        res = subprocess.run(['g++', 'user/code.cpp', '-o', 'user/code.out'], stderr=error_file, text=True)
-        return res.returncode
+    res = subprocess.run(['g++', 'user/code.cpp', '-o', 'user/code.out'], text=True, timeout=10)
+    return res.returncode
 
 def run(i): #Запускает i тест с учетом языка ограничения на время и память
-    with open(f'{path}test/{i}.txt', 'r') as input_file, open('user/out.txt', 'w') as out_file, open('user/error.txt', 'w') as error_file:
-        try:
-            start = time.time() #Стартовое время
-            if language == 'python': #Если питон то сразу запустить его
-                ret = subprocess.run(['python3', 'user/code.py'], stdin=input_file, stdout=out_file, stderr=error_file, timeout=max(2, time_limit), preexec_fn=set_limits)
-            else: #Если c++ то запускать скомпилированый файл
-                ret = subprocess.run(['user/code.out'], stdin=input_file, stdout=out_file, stderr=error_file, timeout=max(2, time_limit), preexec_fn=set_limits)
-            end = time.time() #Конечное время
-            if end - start > time_limit:
-                return "TL"
-            if ret.returncode != 0:
-                return 'UB'
-            return 0
-        except subprocess.TimeoutExpired:
-            return 'TL'
+    with open(f'{path}test/{i}.txt', 'r') as input_file, open('user/out.txt', 'w') as out_file:
+        start = time.time() #Стартовое время
+        if language == 'python': #Если питон то сразу запустить его
+            ret = subprocess.run(['python3', 'user/code.py'], stdin=input_file, stdout=out_file, preexec_fn=set_limits)
+        else: #Если c++ то запускать скомпилированый файл
+            ret = subprocess.run(['user/code.out'], stdin=input_file, stdout=out_file, preexec_fn=set_limits)
+        end = time.time() #Конечное время
+        if end - start > time_limit:
+            return "TL"
+        if ret.returncode != 0:
+            return 'UB'
+        return 0
+            
 
 
 def check():
@@ -44,8 +46,7 @@ def check():
             if (user.read().strip() == ans.read().strip()): #За счет strip можно игнорировать пробелы(опасно для точных тестов)
                 cnt+=1
             else:
-                with open(f'{path}test/{i}.txt', 'r') as file:
-                    return 'Неправильный ответ на тесте:\n' + file.read()
+                return cnt
     return cnt
 
             

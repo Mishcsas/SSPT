@@ -137,6 +137,30 @@
             background-color: #f44336;
             color: white;
         }
+
+        .task-item.solved {
+            border-left: 4px solid #27ae60;
+            background-color: #f0fff0;
+        }
+
+        .task-item.solved a {
+            color: #27ae60;
+        }
+
+        /* Стили для начатой задачи (частично решенной) */
+        .task-item.attempted {
+            border-left: 4px solid #f39c12;
+            background-color: #fff3e0;
+        }
+
+        .task-item.attempted a {
+            color: #f39c12;
+        }
+
+        /* Дополнительный стиль для бейджа с процентом */
+        .difficulty.attempted-badge {
+            background-color: #f39c12;
+        }
     </style>
 </head>
 <body>
@@ -166,35 +190,70 @@
             <div class="task-item">
                 <a href={{A_ref}}>{{A}}</a>
                 <div class="task-desc">{{A_info}}</div>
-                <span class="difficulty easy">легко</span>
+                <span class="difficulty 
+                {% if A_score == 100 %}easy
+                {% elif A_score > 0 and A_score < 100 %}attempted-badge
+                {% else %}easy{% endif %}">
+                    {% if A_score == 100 %}✅ решено
+                    {% elif A_score > 0 and A_score < 100 %}⚠️ {{A_score}}%
+                    {% else %}легко{% endif %}
+                </span>
             </div>
             
             <!-- Задача B -->
             <div class="task-item">
                 <a href={{B_ref}}>{{B}}</a>
                 <div class="task-desc">{{B_info}}</div>
-                <span class="difficulty easy">легко</span>
+                <span class="difficulty 
+                {% if B_score == 100 %}easy
+                {% elif B_score > 0 and B_score < 100 %}attempted-badge
+                {% else %}easy{% endif %}">
+                    {% if B_score == 100 %}✅ решено
+                    {% elif B_score > 0 and B_score < 100 %}⚠️ {{B_score}}%
+                    {% else %}легко{% endif %}
+                </span>
             </div>
             
             <!-- Задача C -->
             <div class="task-item">
                 <a href={{C_ref}}>{{C}}</a>
                 <div class="task-desc">{{C_info}}</div>
-                <span class="difficulty medium">средне</span>
+                <span class="difficulty 
+                {% if C_score == 100 %}medium
+                {% elif C_score > 0 and C_score < 100 %}attempted-badge
+                {% else %}medium{% endif %}">
+                    {% if C_score == 100 %}✅ решено
+                    {% elif C_score > 0 and C_score < 100 %}⚠️ {{C_score}}%
+                    {% else %}средне{% endif %}
+                </span>
             </div>
             
             <!-- Задача D -->
             <div class="task-item">
                 <a href={{D_ref}}>{{D}}</a>
                 <div class="task-desc">{{D_info}}</div>
-                <span class="difficulty medium">средне</span>
+                <span class="difficulty 
+                {% if D_score == 100 %}medium
+                {% elif D_score > 0 and D_score < 100 %}attempted-badge
+                {% else %}medium{% endif %}">
+                    {% if D_score == 100 %}✅ решено
+                    {% elif D_score > 0 and D_score < 100 %}⚠️ {{D_score}}%
+                    {% else %}средне{% endif %}
+                </span>
             </div>
             
             <!-- Задача E -->
             <div class="task-item">
                 <a href={{E_ref}}>{{E}}</a>
                 <div class="task-desc">{{E_info}}</div>
-                <span class="difficulty hard">сложно</span>
+                <span class="difficulty 
+                {% if D_score == 100 %}hard
+                {% elif D_score > 0 and D_score < 100 %}attempted-badge
+                {% else %}hard{% endif %}">
+                    {% if D_score == 100 %}✅ решено
+                    {% elif D_score > 0 and D_score < 100 %}⚠️ {{D_score}}%
+                    {% else %}сложно{% endif %}
+                </span>
             </div>
         </div>
     </main>
