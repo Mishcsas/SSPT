@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, abort
 from functools import wraps
 import subprocess
 import json
@@ -51,12 +51,17 @@ def login():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
-    
+
+@app.errorhandler(404) #Функция для обработки ошибки 404
+def page_not_found(error):
+    return render_template('404.html')
 
 @app.route('/<contest>') #Функция для возврата страницы контеста
 @login_required
 def contest(contest):
     username = str(session.get('username'))
+    if not os.path.exists('tasks/' + contest + '/' + 'condition_contest.json'):
+        abort(404)
     with open('tasks/' + contest + '/' + 'condition_contest.json', 'r') as file:
         condition_contest = json.load(file)
     with open('users/' + username + '.json', 'r') as file:
@@ -73,6 +78,8 @@ def contest(contest):
 @app.route('/<contest>/<num>') #Функция для возврата страницы задачи
 @login_required
 def task(contest, num):
+    if not os.path.exists('tasks/' + contest + '/' + num + '/' + 'condition_task.json'):
+        abort(404)
     username = str(session.get('username'))
     with open('users/' + username + '.json', 'r') as file:
         user = json.load(file)

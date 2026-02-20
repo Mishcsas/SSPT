@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Страница не найдена</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Простой прикол - летающие эмодзи */
+        .emoji-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 20s linear infinite;
+            opacity: 0.1;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #a8a8b3;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #ff6b6b;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #ff6b6b;
+            transform: scale(1.1);
+        }
+
+        .countdown {
+            margin-top: 2rem;
+            font-size: 1rem;
+            color: #6c6c7a;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 6rem;
+            }
+            
+            .message {
+                font-size: 1.2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Прикольные летающие эмодзи на фоне -->
+    <div class="emoji-bg">
+        <div class="emoji" style="left: 10%; animation-duration: 15s;">🔍</div>
+        <div class="emoji" style="left: 25%; animation-duration: 18s;">🌍</div>
+        <div class="emoji" style="left: 40%; animation-duration: 12s;">🚀</div>
+        <div class="emoji" style="left: 55%; animation-duration: 20s;">⭐</div>
+        <div class="emoji" style="left: 70%; animation-duration: 14s;">💫</div>
+        <div class="emoji" style="left: 85%; animation-duration: 16s;">🎯</div>
+        <div class="emoji" style="left: 15%; animation-duration: 22s;">🌀</div>
+        <div class="emoji" style="left: 45%; animation-duration: 17s;">🎨</div>
+        <div class="emoji" style="left: 75%; animation-duration: 19s;">🌈</div>
+        <div class="emoji" style="left: 90%; animation-duration: 13s;">💡</div>
+    </div>
+
+    <div class="container">
+        <h1>404</h1>
+        <div class="message">Кажется, этой страницы не существует...</div>
+        <a href="/" class="btn" id="homeBtn">Вернуться на главную</a>
+        <div class="countdown" id="countdown"></div>
+    </div>
+
+    <script>
+        // Простой таймер обратного отсчета для прикола
+        let seconds = 5;
+        const countdownEl = document.getElementById('countdown');
+        const homeBtn = document.getElementById('homeBtn');
+        
+        function updateCountdown() {
+            if (seconds > 0) {
+                countdownEl.textContent = `Автоматическое перенаправление через ${seconds} сек...`;
+                seconds--;
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+        // Запускаем таймер
+        if (countdownEl) {
+            countdownEl.textContent = `Автоматическое перенаправление через ${seconds} сек...`;
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Если кнопка не работает - покажем сообщение
+        homeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Перенаправляем на главную! (В реальном проекте здесь будет переход)');
+        });
+    </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 import random
 import subprocess
+from math import sqrt
 
 def compilate(): #Компилирует код на с++
     subprocess.run(['g++', f'{path}/solution.cpp', '-o', f'{path}/solution.out'])
@@ -8,6 +9,7 @@ def gen_digit(l, r): #Генерирует число в диапазоне от
     return random.randint(l, r)
 
 def retest(): #Делает ретесты для всех тестов без изменения тестов
+    compilate()
     for i in range(1, 101):
         test = path + '/test/' + str(i) + '.txt'
         ans = path + '/ans/' + str(i) + '.txt'
@@ -37,12 +39,12 @@ def generate(): #Генерирует тесты и запускает их ту
         test = path + '/test/' + str(i) + '.txt'
         ans = path + '/ans/' + str(i) + '.txt'
         with open(test, 'w') as file:
-            a, b = gen_digit(-100, 100), gen_digit(-100, 100) #Вот тут должна быть нужная генерация для записи в файл
-            file.write(f"{a} {b}")
+            a, b, c = gen_digit(-10000, 10000), gen_digit(-10000, 10000), gen_digit(-10000, 10000) #Вот тут должна быть нужная генерация для записи в файл
+            
         with open(test, 'r') as in_file, open(ans, 'w') as out_file:
             subprocess.run([f'{path}/solution.out'], stdin=in_file, stdout=out_file)
 
 
-path = 'tasks/contest1/A' #путь до задачи на которую идут тесты
+path = 'tasks/contest1/C' #путь до задачи на которую идут тесты
 
-generate()
+retest()
