@@ -33,18 +33,19 @@ def gen_perm(n, start1 = False): #Генерирует перестановки 
     shuffle(arr)
     return arr
 
+
 def generate(): #Генерирует тесты и запускает их тут меняется функция для генерации
     compilate()
     for i in range(1, 101):
         test = path + '/test/' + str(i) + '.txt'
         ans = path + '/ans/' + str(i) + '.txt'
         with open(test, 'w') as file:
-            a, b, c = gen_digit(-10000, 10000), gen_digit(-10000, 10000), gen_digit(-10000, 10000) #Вот тут должна быть нужная генерация для записи в файл
-            
+            a, b = gen_digit(1, 10000), gen_digit(1, 10000) #Вот тут должна быть нужная генерация для записи в файл
+            file.write(f'{a} {b}')
         with open(test, 'r') as in_file, open(ans, 'w') as out_file:
             subprocess.run([f'{path}/solution.out'], stdin=in_file, stdout=out_file)
 
 
-path = 'tasks/contest1/C' #путь до задачи на которую идут тесты
+path = 'tasks/contest1/E' #путь до задачи на которую идут тесты
 
-retest()
+generate()

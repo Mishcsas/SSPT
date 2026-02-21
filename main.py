@@ -81,15 +81,20 @@ def task(contest, num):
     if not os.path.exists('tasks/' + contest + '/' + num + '/' + 'condition_task.json'):
         abort(404)
     username = str(session.get('username'))
-    with open('users/' + username + '.json', 'r') as file:
+    path_user = 'users/' + username + '.json'
+    path_condition = 'tasks/' + contest + '/' + num + '/' + 'condition_task.json'
+    path_condition_long = 'tasks/' + contest + '/' + num + '/' + 'condition_task_long.txt'
+    with open(path_user, 'r') as file:
         user = json.load(file)
-    with open('tasks/' + contest + '/' + num + '/' + 'condition_task.json', 'r') as file:
-        condition_task = json.load(file)
+    with open(path_condition, 'r') as condition:
+        condition_task = json.load(condition)
+    with open(path_condition_long, 'r') as condition_long:
+        condition_task_long = condition_long.read() #Нужно если очень большое условие у задачи
     return render_template('task.html',
                            time_limit = condition_task.get('time_limit', ''),
                            memory_limit = condition_task.get('memory_limit', ''),
                            name = condition_task.get('name', ''),
-                           condition = condition_task.get('condition', ''),
+                           condition = condition_task.get('condition', condition_task_long),
                            sample_in_1 = condition_task.get('sample_in_1', ''),
                            sample_out_1 = condition_task.get('sample_out_1', ''),
                            sample_in_2 = condition_task.get('sample_in_2', ''),
