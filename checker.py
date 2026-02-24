@@ -17,7 +17,7 @@ def set_limits(): #Установка лимитов(запускает доче
     os.environ.clear() #Очистка переменных окружения
 
 def compilate(): #Компиляция кода
-    res = subprocess.run(['g++', 'user/code.cpp', '-o', 'user/code.out'], text=True, timeout=10)
+    res = subprocess.run(['g++', 'user/code.cpp', '-o', 'user/code.out'])
     return res.returncode
 
 def run(i): #Запускает i тест с учетом языка ограничения на время и память
