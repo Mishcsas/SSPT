@@ -134,7 +134,7 @@
 
     <script>
         // Простой таймер обратного отсчета для прикола
-        let seconds = 5;
+        let seconds = 10;
         const countdownEl = document.getElementById('countdown');
         const homeBtn = document.getElementById('homeBtn');
         
@@ -155,8 +155,7 @@
 
         // Если кнопка не работает - покажем сообщение
         homeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Перенаправляем на главную! (В реальном проекте здесь будет переход)');
+            window.location.href = '/'
         });
     </script>
 </body>
