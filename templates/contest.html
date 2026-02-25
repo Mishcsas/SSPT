@@ -185,6 +185,16 @@
             flex-shrink: 0; /* Запрещаем сжиматься */
             width: 100%;
         }
+        .task-item-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .task-item-link:hover {
+            /* добавьте стили при наведении по желанию */
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -211,74 +221,84 @@
             <h2>📋 Список задач:</h2>
             
             <!-- Задача A -->
-            <div class="task-item">
-                <a href={{A_ref}}>{{A}}</a>
-                <div class="task-desc">{{A_info}}</div>
-                <span class="difficulty 
-                {% if A_score == 100 %}easy
-                {% elif A_score > 0 and A_score < 100 %}attempted-badge
-                {% else %}easy{% endif %}">
-                    {% if A_score == 100 %}✅ решено
-                    {% elif A_score > 0 and A_score < 100 %}⚠️ {{A_score}}%
-                    {% else %}легко{% endif %}
-                </span>
-            </div>
+            <a href="{{A_ref}}" class="task-item-link">
+                <div class="task-item">
+                    <div><b>{{A_name}}</b></div>
+                    <div class="task-desc">{{A_info}}</div>
+                    <span class="difficulty 
+                    {% if A_score == 100 %}easy
+                    {% elif A_score > 0 and A_score < 100 %}attempted-badge
+                    {% else %}easy{% endif %}">
+                        {% if A_score == 100 %}✅ решено
+                        {% elif A_score > 0 and A_score < 100 %}⚠️ {{A_score}}%
+                        {% else %}легко{% endif %}
+                    </span>
+                </div>
+            </a>
             
             <!-- Задача B -->
-            <div class="task-item">
-                <a href={{B_ref}}>{{B}}</a>
-                <div class="task-desc">{{B_info}}</div>
-                <span class="difficulty 
-                {% if B_score == 100 %}easy
-                {% elif B_score > 0 and B_score < 100 %}attempted-badge
-                {% else %}easy{% endif %}">
-                    {% if B_score == 100 %}✅ решено
-                    {% elif B_score > 0 and B_score < 100 %}⚠️ {{B_score}}%
-                    {% else %}легко{% endif %}
-                </span>
-            </div>
+            <a href="{{B_ref}}" class="task-item-link">
+                <div class="task-item">
+                    <div><b>{{B_name}}</b></div>
+                    <div class="task-desc">{{B_info}}</div>
+                    <span class="difficulty 
+                    {% if B_score == 100 %}easy
+                    {% elif B_score > 0 and B_score < 100 %}attempted-badge
+                    {% else %}easy{% endif %}">
+                        {% if B_score == 100 %}✅ решено
+                        {% elif B_score > 0 and B_score < 100 %}⚠️ {{B_score}}%
+                        {% else %}легко{% endif %}
+                    </span>
+                </div>
+            </a>
             
             <!-- Задача C -->
-            <div class="task-item">
-                <a href={{C_ref}}>{{C}}</a>
-                <div class="task-desc">{{C_info}}</div>
-                <span class="difficulty 
-                {% if C_score == 100 %}medium
-                {% elif C_score > 0 and C_score < 100 %}attempted-badge
-                {% else %}medium{% endif %}">
-                    {% if C_score == 100 %}✅ решено
-                    {% elif C_score > 0 and C_score < 100 %}⚠️ {{C_score}}%
-                    {% else %}средне{% endif %}
-                </span>
-            </div>
+            <a href="{{C_ref}}" class="task-item-link">
+                <div class="task-item">
+                    <div><b>{{C_name}}</b></div>
+                    <div class="task-desc">{{C_info}}</div>
+                    <span class="difficulty 
+                    {% if C_score == 100 %}medium
+                    {% elif C_score > 0 and C_score < 100 %}attempted-badge
+                    {% else %}medium{% endif %}">
+                        {% if C_score == 100 %}✅ решено
+                        {% elif C_score > 0 and C_score < 100 %}⚠️ {{C_score}}%
+                        {% else %}средне{% endif %}
+                    </span>
+                </div>
+            </a>
             
             <!-- Задача D -->
-            <div class="task-item">
-                <a href={{D_ref}}>{{D}}</a>
-                <div class="task-desc">{{D_info}}</div>
-                <span class="difficulty 
-                {% if D_score == 100 %}medium
-                {% elif D_score > 0 and D_score < 100 %}attempted-badge
-                {% else %}medium{% endif %}">
-                    {% if D_score == 100 %}✅ решено
-                    {% elif D_score > 0 and D_score < 100 %}⚠️ {{D_score}}%
-                    {% else %}средне{% endif %}
-                </span>
-            </div>
+            <a href="{{D_ref}}" class="task-item-link">
+                <div class="task-item">
+                    <div><b>{{D_name}}</b></div>
+                    <div class="task-desc">{{D_info}}</div>
+                    <span class="difficulty 
+                    {% if D_score == 100 %}medium
+                    {% elif D_score > 0 and D_score < 100 %}attempted-badge
+                    {% else %}medium{% endif %}">
+                        {% if D_score == 100 %}✅ решено
+                        {% elif D_score > 0 and D_score < 100 %}⚠️ {{D_score}}%
+                        {% else %}средне{% endif %}
+                    </span>
+                </div>
+            </a>
             
             <!-- Задача E -->
-            <div class="task-item">
-                <a href={{E_ref}}>{{E}}</a>
-                <div class="task-desc">{{E_info}}</div>
-                <span class="difficulty 
-                {% if E_score == 100 %}hard
-                {% elif E_score > 0 and E_score < 100 %}attempted-badge
-                {% else %}hard{% endif %}">
-                    {% if E_score == 100 %}✅ решено
-                    {% elif E_score > 0 and E_score < 100 %}⚠️ {{E_score}}%
-                    {% else %}сложно{% endif %}
-                </span>
-            </div>
+            <a href="{{E_ref}}" class="task-item-link">
+                <div class="task-item">
+                    <div><b>{{E_name}}</b></div>
+                    <div class="task-desc">{{E_info}}</div>
+                    <span class="difficulty 
+                    {% if E_score == 100 %}hard
+                    {% elif E_score > 0 and E_score < 100 %}attempted-badge
+                    {% else %}hard{% endif %}">
+                        {% if E_score == 100 %}✅ решено
+                        {% elif E_score > 0 and E_score < 100 %}⚠️ {{E_score}}%
+                        {% else %}сложно{% endif %}
+                    </span>
+                </div>
+            </a>
         </div>
     </main>
     

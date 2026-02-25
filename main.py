@@ -9,8 +9,12 @@ app.secret_key = 'qhtgyuj12cAv0.'
 users_data = dict() 
 overwrite_users_data = True #Перезаписывает данные для всех пользователей тоесть обнуляет их
 
-def load_users(): #Делаем инициацию данных
+def init(): #Делаем инициацию данных
     global users_data
+    if not os.path.exists('test'):
+        os.mkdir('test')
+    if not os.path.exists('users'):
+        os.mkdir('users')
     with open('users_data.json') as file: #Получаем данные пользователей
         users_data = json.load(file)
     for name in users_data:
@@ -68,11 +72,11 @@ def contest(contest):
         user = json.load(file)
     return render_template('contest.html',
     contest_name = condition_contest['contest_name'], contest_info = condition_contest['contest_info'],
-    A = condition_contest.get('A', ''), A_info = condition_contest.get('A_info', ''), A_ref = condition_contest.get('A_ref', ''), A_score = user.get(contest + 'A', 0),
-    B = condition_contest.get('B', ''), B_info = condition_contest.get('B_info', ''), B_ref = condition_contest.get('B_ref', ''), B_score = user.get(contest + 'B', 0),
-    C = condition_contest.get('C', ''), C_info = condition_contest.get('C_info', ''), C_ref = condition_contest.get('C_ref', ''), C_score = user.get(contest + 'C', 0),
-    D = condition_contest.get('D', ''), D_info = condition_contest.get('D_info', ''), D_ref = condition_contest.get('D_ref', ''), D_score = user.get(contest + 'D', 0),
-    E = condition_contest.get('E', ''), E_info = condition_contest.get('E_info', ''), E_ref = condition_contest.get('E_ref', ''), E_score = user.get(contest + 'E', 0)
+    A_name = condition_contest.get('A_name', ''), A_info = condition_contest.get('A_info', ''), A_ref = condition_contest.get('A_ref', ''), A_score = user.get(contest + 'A', 0),
+    B_name = condition_contest.get('B_name', ''), B_info = condition_contest.get('B_info', ''), B_ref = condition_contest.get('B_ref', ''), B_score = user.get(contest + 'B', 0),
+    C_name = condition_contest.get('C_name', ''), C_info = condition_contest.get('C_info', ''), C_ref = condition_contest.get('C_ref', ''), C_score = user.get(contest + 'C', 0),
+    D_name = condition_contest.get('D_name', ''), D_info = condition_contest.get('D_info', ''), D_ref = condition_contest.get('D_ref', ''), D_score = user.get(contest + 'D', 0),
+    E_name = condition_contest.get('E_name', ''), E_info = condition_contest.get('E_info', ''), E_ref = condition_contest.get('E_ref', ''), E_score = user.get(contest + 'E', 0)
     )
 
 @app.route('/<contest>/<num>') #Функция для возврата страницы задачи
@@ -115,21 +119,13 @@ def check():
     contest = str(request.form.get('contest'))
     num = str(request.form.get('num'))
     path = 'tasks/' + contest + '/' + num + '/'
-    if language == 'python':
-        with open('user/code.py', 'w') as file:
-            file.write(code)
-            file.close()
-    else:
-        with open('user/code.cpp', 'w') as file:
-            file.write(code)
-            file.close()
-    res = subprocess.run(['python3', 'checker.py'], input=f"{language}\n{path}\n", text=True, capture_output=True)
+    with open(f'test/{username}.{language}', 'w') as file:
+        file.write(code)
+    res = subprocess.run(['python3', 'checker.py'], input=f"{language}\n{path}\n{username}\n{code}", text=True, capture_output=True)
     out = res.stdout
-    print(out)
     if out.split()[0].isdigit():
         user[contest + num] = max(user.get(contest + num, 0), int(out.split()[0]))
     with open('users/' + username + '.json', 'w') as file:
-        print(user)
         json.dump(user, file)
     return out
 
@@ -137,6 +133,6 @@ def check():
 
 
 if __name__ == "__main__":
-    load_users()
+    init()
     app.run(debug=True, host='0.0.0.0') #Если стоит дебаг то код на питоне не работает
     #host = '0.0.0.0' позваляет достучаться из локальной сети
