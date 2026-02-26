@@ -27,13 +27,13 @@ def init(): #Делаем инициацию данных
                 users_data[username]['password'] = users[username]
         else:
             users_data = json.load(users_data_json)
-    print(users_data)
 
 def save_users_data():
     while True:
-        time.sleep(15)
+        data_to_save = users_data.copy()
         with open('users_data.json', 'w') as file:
-            json.dump(users_data, file, indent=2)
+            json.dump(data_to_save, file, indent=2)
+        time.sleep(15)
 
 def login_required(func): #Декоративная функция для требования авторизации
     @wraps(func)
