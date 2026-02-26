@@ -1,4 +1,5 @@
-users/
+users_data.json
+users.json
 .vscode/
 test/
 .venv/
