@@ -10,25 +10,32 @@ import time
 app = Flask(__name__)
 app.secret_key = 'qhtgyuj12cAv0.'
 users_data = dict()
-overwrite_users_data = True #Перезаписывает данные для всех пользователей тоесть обнуляет их
+overwrite_users_data = False #Перезаписывает данные для всех пользователей тоесть обнуляет их
 
 def init(): #Делаем инициацию данных
     global users_data
     if not os.path.exists('test'):
-        os.mkdir('test')
+        os.mkdir('test')    
     if not os.path.exists('users_data.json'):
         with open('users_data.json', 'w') as file:
             json.dump(dict(), file)
     with open('users.json') as users_json, open('users_data.json', 'r') as users_data_json:
         users = json.load(users_json)
-        if overwrite_users_data:
+        users_data_help = json.load(users_data_json) #Получает информацию которая есть в спомогательный словарь
+        if overwrite_users_data: #Полностью стирает все данные о пользователях и записывает заново
             for username in users:
                 users_data[username] = dict()
                 users_data[username]['password'] = users[username]
         else:
-            users_data = json.load(users_data_json)
+            for username in users:
+                if username not in users_data_help: #Добавляет пользователей если нету данных и они есть в users.json
+                    users_data[username] = dict()
+                    users_data[username]['password'] = users[username]
+            for username in users_data_help: #Добавляет пользователей если есть данные для них и они есть в users.json
+                if username in users:
+                    users_data[username] = users_data_help[username]
 
-def save_users_data():
+def save_users_data(): #Функция которая работает в фоне и каждые 15 секунд сохраняет информацию о пользователях
     while True:
         data_to_save = users_data.copy()
         with open('users_data.json', 'w') as file:
@@ -138,7 +145,7 @@ def check():
 
 if __name__ == "__main__":
     init()
-    thread = threading.Thread(target=save_users_data, daemon=True)
+    thread = threading.Thread(target=save_users_data, daemon=True) #Запускает функцию в фоне чтобы не мешала основному коду
     thread.start()
     app.run(debug=True, host='0.0.0.0') #Если стоит дебаг то код на питоне не работает
     #host = '0.0.0.0' позваляет достучаться из локальной сети

@@ -3,15 +3,21 @@
 using namespace std;
     
 int main() {
-    long long a, b, c;
-    cin >> a >> b >> c;
-    long long d = b * b - (4 * a * c);
-    if (d == 0) {
-        cout << -b / (2 * a) << endl;
-    } else if (d > 0) {
-        d = sqrt(d);
-        cout << min((-b - d) / (2 * a), (-b + d) / (2 * a))  << " " << max((-b + d) / (2 * a), (-b - d) / (2 * a)) << endl;
+    string a, b;
+    cin >> a >> b;
+    for (int i = 0; i < a.size(); i++) {
+        if (i % 2 == 0 && b[i] == '1') {
+            swap(a[i], b[i]);
+        } 
+        if (i % 2 == 1 && a[i] == '1') {
+            swap(a[i], b[i]);
+        }
+    }
+    if (a < b) {
+        cout << "Bob" << endl;
+    } else if (a > b) {
+        cout << "Alice" << endl;
     } else {
-        cout << "Нет корней" << endl;
+        cout << "Draw" << endl;
     }
 }

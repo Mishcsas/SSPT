@@ -331,7 +331,7 @@
         <!-- Название задачи + ограничения -->
         <div class="title-section">
             <div class="task-header">
-                <div class="task-name">{{ name }}</div>
+                <div class="task-name">{{name}}</div>
                 {% if is_solved == 100 %}
                     <div class="solved-badge">✓ ЗАДАЧА РЕШЕНА</div>
                 {% endif %}
@@ -346,7 +346,7 @@
 
         <!-- Текст условия -->
         <div class="problem-text">
-            {{ condition|safe }}
+            {{condition|safe}}
         </div>
 
         <!-- Два теста -->
@@ -357,8 +357,8 @@
                     <span>пример</span>
                 </div>
                 <div class="test-content">
-                    <div class="input-line"><span class="label">вход</span><span class="value">{{sample_in_1}}</span></div>
-                    <div class="output-line"><span class="label">выход</span><span class="value">{{sample_out_1}}</span></div>
+                    <div class="input-line"><span class="label">вход</span><span class="value">{{sample_in_1|safe}}</span></div>
+                    <div class="output-line"><span class="label">выход</span><span class="value">{{sample_out_1|safe}}</span></div>
                 </div>
             </div>
             <div class="test-card">
@@ -367,8 +367,8 @@
                     <span>пример</span>
                 </div>
                 <div class="test-content">
-                    <div class="input-line"><span class="label">вход</span><span class="value">{{sample_in_2}}</span></div>
-                    <div class="output-line"><span class="label">выход</span><span class="value">{{sample_out_2}}</span></div>
+                    <div class="input-line"><span class="label">вход</span><span class="value">{{sample_in_2|safe}}</span></div>
+                    <div class="output-line"><span class="label">выход</span><span class="value">{{sample_out_2|safe}}</span></div>
                 </div>
             </div>
         </div>
