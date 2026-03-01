@@ -2,16 +2,15 @@
 
 using namespace std;
     
-int gcd(int a, int b) {
-    while (b > 0) {
-        a %= b;
-        swap(a, b);
-    }
-    return a;
-}
+
 
 int main() {
-    int a, b;
-    cin >> a >> b;
-    cout << gcd(a, b) << endl;
+    string s;
+    char c;
+    cin >> s >> c;
+    map<char, int> m;
+    for (int i = 0; i < s.size(); i++) {
+        m[s[i]]++;
+    }
+    cout << m[c] << endl;
 }

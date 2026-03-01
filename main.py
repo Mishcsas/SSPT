@@ -12,7 +12,7 @@ app.secret_key = 'qhtgyuj12cAv0.'
 users_data = dict()
 overwrite_users_data = False #Перезаписывает данные для всех пользователей тоесть обнуляет их
 
-def init(): #Делаем инициацию данных
+def init(): #Делаем инициализацию данных
     global users_data
     if not os.path.exists('test'):
         os.mkdir('test')    

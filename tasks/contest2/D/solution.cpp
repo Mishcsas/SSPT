@@ -3,7 +3,15 @@
 using namespace std;
     
 int main() {
-    long long a, b;
-    cin >> a >> b;
-    cout << sqrt(a * a + b * b) << endl;
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    sort(a.begin(), a.end());
+    for (auto i : a) {
+        cout << i << " ";
+    }
+    cout << endl;
 }
