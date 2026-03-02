@@ -1,9 +1,0 @@
-{
-    "time_limit" : "1 секунда",
-    "memory_limit" : "256 МБ",
-    "name" : "Задача Васи",
-    "sample_in_1" : "8 12",
-    "sample_out_1" : "4",
-    "sample_in_2" : "9 44",
-    "sample_out_2" : "1"
-}

@@ -19,21 +19,13 @@ def init(): #Делаем инициализацию данных
     if not os.path.exists('users_data.json'):
         with open('users_data.json', 'w') as file:
             json.dump(dict(), file)
-    with open('users.json') as users_json, open('users_data.json', 'r') as users_data_json:
-        users = json.load(users_json)
-        users_data_help = json.load(users_data_json) #Получает информацию которая есть в спомогательный словарь
+    with open('users_data.json', 'r') as users_data_json:
+        users_data = json.load(users_data_json)
         if overwrite_users_data: #Полностью стирает все данные о пользователях и записывает заново
-            for username in users:
+            for username in users_data:
+                password = users_data[username]['password']
                 users_data[username] = dict()
-                users_data[username]['password'] = users[username]
-        else:
-            for username in users:
-                if username not in users_data_help: #Добавляет пользователей если нету данных и они есть в users.json
-                    users_data[username] = dict()
-                    users_data[username]['password'] = users[username]
-            for username in users_data_help: #Добавляет пользователей если есть данные для них и они есть в users.json
-                if username in users:
-                    users_data[username] = users_data_help[username]
+                users_data[username]['password'] = password
 
 def save_users_data(): #Функция которая работает в фоне и каждые 15 секунд сохраняет информацию о пользователях
     while True:
@@ -89,11 +81,11 @@ def contest(contest):
         condition_contest = json.load(file)
     return render_template('contest.html',
     contest_name = condition_contest['contest_name'], contest_info = condition_contest['contest_info'],
-    A_name = condition_contest.get('A_name', ''), A_info = condition_contest.get('A_info', ''), A_ref = condition_contest.get('A_ref', ''), A_score = users_data[username].get(contest + 'A', 0),
-    B_name = condition_contest.get('B_name', ''), B_info = condition_contest.get('B_info', ''), B_ref = condition_contest.get('B_ref', ''), B_score = users_data[username].get(contest + 'B', 0),
-    C_name = condition_contest.get('C_name', ''), C_info = condition_contest.get('C_info', ''), C_ref = condition_contest.get('C_ref', ''), C_score = users_data[username].get(contest + 'C', 0),
-    D_name = condition_contest.get('D_name', ''), D_info = condition_contest.get('D_info', ''), D_ref = condition_contest.get('D_ref', ''), D_score = users_data[username].get(contest + 'D', 0),
-    E_name = condition_contest.get('E_name', ''), E_info = condition_contest.get('E_info', ''), E_ref = condition_contest.get('E_ref', ''), E_score = users_data[username].get(contest + 'E', 0)
+    A_name = condition_contest.get('A_name', None), A_info = condition_contest.get('A_info', None), A_difficulty = condition_contest.get('A_difficulty', None), A_ref = condition_contest.get('A_ref', None), A_score = users_data[username].get(contest + 'A', 0),
+    B_name = condition_contest.get('B_name', None), B_info = condition_contest.get('B_info', None), B_difficulty = condition_contest.get('B_difficulty', None), B_ref = condition_contest.get('B_ref', None), B_score = users_data[username].get(contest + 'B', 0),
+    C_name = condition_contest.get('C_name', None), C_info = condition_contest.get('C_info', None), C_difficulty = condition_contest.get('C_difficulty', None), C_ref = condition_contest.get('C_ref', None), C_score = users_data[username].get(contest + 'C', 0),
+    D_name = condition_contest.get('D_name', None), D_info = condition_contest.get('D_info', None), D_difficulty = condition_contest.get('D_difficulty', None), D_ref = condition_contest.get('D_ref', None), D_score = users_data[username].get(contest + 'D', 0),
+    E_name = condition_contest.get('E_name', None), E_info = condition_contest.get('E_info', None), E_difficulty = condition_contest.get('E_difficulty', None), E_ref = condition_contest.get('E_ref', None), E_score = users_data[username].get(contest + 'E', 0)
     )
 
 @app.route('/<contest>/<num>') #Функция для возврата страницы задачи

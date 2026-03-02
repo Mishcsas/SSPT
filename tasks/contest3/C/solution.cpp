@@ -3,15 +3,19 @@
 using namespace std;
     
 int main() {
-    long long a, b, c;
-    cin >> a >> b >> c;
-    long long d = b * b - (4 * a * c);
-    if (d == 0) {
-        cout << -b / (2 * a) << endl;
-    } else if (d > 0) {
-        d = sqrt(d);
-        cout << min((-b - d) / (2 * a), (-b + d) / (2 * a))  << " " << max((-b + d) / (2 * a), (-b - d) / (2 * a)) << endl;
-    } else {
-        cout << "Нет корней" << endl;
+    long long n, q;
+    cin >> n >> q;
+    vector<long long> a(n), pref(n + 1, 0);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        pref[i] = pref[i-1] + a[i-1];
+    }
+    while (q--) {
+        int l, r;
+        cin >> l >> r;
+        l--;
+        cout << pref[r] - pref[l] << endl;
     }
 }

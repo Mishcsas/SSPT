@@ -39,16 +39,25 @@ def generate(): #Генерирует тесты и запускает их ту
     for i in range(1, 101):
         test = path + '/test/' + str(i) + '.txt'
         ans = path + '/ans/' + str(i) + '.txt'
-        alf = "abcdefghijklmnopqrstuvwxyz"
         with open(test, 'w') as file:
             n = gen_digit(1, gen_digit(1, 100000)) #Вот тут должна быть нужная генерация для записи в файл
-            for i in range(n):
-                file.write(f'{alf[gen_digit(0, 25)]}')
-            file.write(f'\n{alf[gen_digit(0, 25)]}')
+            q = gen_digit(1, gen_digit(1, 100000))
+            file.write(f'{n} {q}\n')
+            arr = gen_arr(n, -100000, 100000)
+            for i in arr:
+                file.write(f'{i} ')
+            file.write('\n')
+            for i in range(q):
+                l = gen_digit(1, n)
+                r = gen_digit(1, n)
+                while (l > r):
+                    l = gen_digit(1, n)
+                    r = gen_digit(1, n)
+                file.write(f'{l} {r}\n')
         with open(test, 'r') as in_file, open(ans, 'w') as out_file:
             subprocess.run([f'{path}/solution.out'], stdin=in_file, stdout=out_file)
 
 
-path = 'tasks/contest2/E' #путь до задачи на которую идут тесты
+path = 'tasks/contest3/C' #путь до задачи на которую идут тесты
 
 generate()
