@@ -11,6 +11,8 @@ language = 'cpp'
 use_checker = False
 id = '1'
 
+
+
 def set_limits(): #Установка лимитов(запускает дочерний процесс перед запуском основного)
     resource.setrlimit(resource.RLIMIT_AS, (memory_limit, memory_limit)) #Огранчиения на память
     resource.setrlimit(resource.RLIMIT_CPU, (time_limit + 1, time_limit + 1)) #Ограничения на время
@@ -18,9 +20,13 @@ def set_limits(): #Установка лимитов(запускает доче
     os.umask(0o777) #Запрет на запись файлов
     os.environ.clear() #Очистка переменных окружения
 
+
+
 def compilate(): #Компиляция кода
     res = subprocess.run(['g++', f'test/{id}.cpp', '-o', f'test/{id}.out'])
     return res.returncode
+
+
 
 def run(i): #Запускает i тест с учетом языка ограничения на время и память
     with open(f'{path}test/{i}.txt', 'r') as input_file, open(f'test/{id}_out.txt', 'w') as out_file:
@@ -35,9 +41,10 @@ def run(i): #Запускает i тест с учетом языка огран
         if ret.returncode != 0:
             return 'UB'
         return 0
-            
 
-def run_checker():
+
+
+def run_checker(): #Запускает чекер для определенной задачи и записывает его результат в файл
     with open(f'test/{id}_out.txt', 'r') as file:
         res = subprocess.run(['python3', f'{path}checker.py'], stdin=file, text=True, capture_output=True)
     with open(f'test/{id}_out.txt', 'w') as file:
@@ -45,7 +52,7 @@ def run_checker():
 
 
 
-def check():
+def check(): #Функция для проверки решения пользователя
     cnt = 0
     for i in range(1, 101):
         res = run(i)
@@ -54,15 +61,15 @@ def check():
         if use_checker:
             run_checker()
         with open(f'test/{id}_out.txt', 'r') as user, open(f'{path}ans/{i}.txt', 'r') as ans: #Проверка на совпадение ответов
-            if (user.read().strip() == ans.read().strip()): #За счет strip можно игнорировать пробелы(опасно для точных тестов)
+            if (user.read().strip() == ans.read().strip()):
                 cnt+=1
             else:
                 return cnt
     return cnt
 
-            
 
-def main():
+
+def main(): #Получает данные по задаче и запускает проверку
     global language, path, memory_limit, time_limit, use_checker
     with open(path + 'condition_task.json', 'r') as file: #Получает из файла лимитов [ограничения по времени, ограничение по памяти]
         data = json.load(file) #получает данные из файла и преобразует их в словарь
@@ -81,8 +88,8 @@ def main():
         print(res)
         
 
-language = input()
-path = input()
-id = input()
+language = input() #Язык програмирования
+path = input() #Путь до задачи
+id = input() #Айди текущего кода чтобы была возможность асинхроности
 
 main()
