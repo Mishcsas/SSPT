@@ -1,5 +1,5 @@
-# Используем официальный образ Ubuntu (последняя LTS версия)
-FROM ubuntu:22.04
+# Используем образ Ubuntu c зеркала(последняя LTS версия)
+FROM mirror.gcr.io/library/ubuntu:latest
 
 # Предотвращаем интерактивные запросы при установке пакетов
 ENV DEBIAN_FRONTEND=noninteractive
@@ -37,8 +37,21 @@ WORKDIR /project
 # Копируем сайт
 COPY . .
 
-# Качаем зависимости
-RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Устанавливаем python3-venv (нужен для создания виртуального окружения)
+RUN apt-get update && apt-get install -y python3-venv && rm -rf /var/lib/apt/lists/*
+
+# Создаем виртуальное окружение
+RUN python3 -m venv /venv
+
+# Устанавливаем pip внутри виртуального окружения (обновляем до свежей версии)
+RUN /venv/bin/pip install --upgrade pip
+
+# Устанавливаем зависимости через pip из виртуального окружения
+RUN /venv/bin/pip install -r requirements.txt
+
+# Добавляем виртуальное окружение в PATH, чтобы команды были доступны
+ENV PATH="/venv/bin:$PATH"
 
 # Указываем порт для сайта
 EXPOSE 5000

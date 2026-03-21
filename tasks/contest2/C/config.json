@@ -1,0 +1,11 @@
+{
+    "time_limit" : "1 секунда",
+    "memory_limit" : "256 МБ",
+    "name" : "Веселые биты",
+    "use_checker" : false,
+    "independent_tests" : false,
+    "sample_in_1" : "1100<br>0011",
+    "sample_out_1" : "Alice",
+    "sample_in_2" : "11111<br>11111",
+    "sample_out_2" : "Draw"
+}

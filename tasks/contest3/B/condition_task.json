@@ -1,9 +1,0 @@
-{
-    "time_limit" : "1 секунда",
-    "memory_limit" : "256 МБ",
-    "name" : "Всё просто",
-    "sample_in_1" : "24",
-    "sample_out_1" : "2*2*2*3",
-    "sample_in_2" : "7",
-    "sample_out_2" : "7"
-}

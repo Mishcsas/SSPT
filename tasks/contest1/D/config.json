@@ -1,0 +1,11 @@
+{
+    "time_limit" : "1 секунда",
+    "memory_limit" : "256 МБ",
+    "use_checker" : false,
+    "independent_tests" : false,
+    "name" : "Найди гипотенузу",
+    "sample_in_1" : "3 5",
+    "sample_out_1" : "5",
+    "sample_in_2" : "5 12",
+    "sample_out_2" : "13"
+}

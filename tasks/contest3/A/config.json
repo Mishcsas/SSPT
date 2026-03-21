@@ -1,0 +1,11 @@
+{
+    "time_limit" : "1 секунда",
+    "memory_limit" : "256 МБ",
+    "name" : "Автомат",
+    "use_checker" : false,
+    "independent_tests" : false,
+    "sample_in_1" : "1",
+    "sample_out_1" : "1",
+    "sample_in_2" : "10",
+    "sample_out_2" : "14"
+}

@@ -1,0 +1,11 @@
+{
+    "time_limit" : "1 секунда",
+    "memory_limit" : "256 МБ",
+    "name" : "Реши квадратное уравнение",
+    "use_checker" : false,
+    "independent_tests" : false,
+    "sample_in_1" : "5 5 -10",
+    "sample_out_1" : "-2 0",
+    "sample_in_2" : "3 1 9",
+    "sample_out_2" : "Нет корней"
+}
