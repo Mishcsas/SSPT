@@ -1,7 +1,7 @@
 {
     "time_limit" : "1 секунда",
     "memory_limit" : "256 МБ",
-    "use_checker" : false,
+    "use_checker" : true,
     "independent_tests" : false,
     "name" : "Троители",
     "sample_in_1" : "12",
