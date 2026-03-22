@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y \
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # Устанавливаем рабочую директорию
-WORKDIR /project
+WORKDIR /SSPT
 
 # Копируем сайт
 COPY . .

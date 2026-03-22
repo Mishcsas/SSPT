@@ -427,6 +427,20 @@
             reader.onload = (ev) => codeEditor.value = ev.target.result;
             reader.readAsText(file);
         });
+        codeEditor.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                
+                // Вставляем 4 пробела
+                this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
+                
+                // Ставим курсор после вставленных пробелов
+                this.selectionStart = this.selectionEnd = start + 4;
+            }
+        });
     </script>
 
     <script>
@@ -460,7 +474,31 @@
         const text = await response.text();
         resultDiv.textContent = text;
         if (text.trim() === '100') {
-            location.reload()
+            let solvedBadge = document.querySelector('.solved-badge');
+            const taskHeader = document.querySelector('.task-header');
+            
+            if (!solvedBadge) {
+                // Если бейджа нет, создаем его
+                solvedBadge = document.createElement('div');
+                solvedBadge.className = 'solved-badge';
+                solvedBadge.textContent = '✓ ЗАДАЧА РЕШЕНА';
+                taskHeader.appendChild(solvedBadge);
+            } else {
+                // Если бейдж уже есть, просто показываем его (на случай если он был скрыт)
+                solvedBadge.style.display = 'inline-block';
+            }
+            
+            // Опционально: показываем сообщение об успехе
+            resultDiv.style.background = '#d4edda';
+            resultDiv.style.borderColor = '#c3e6cb';
+            resultDiv.style.color = '#155724';
+            
+            // Можно добавить анимацию
+            solvedBadge.style.animation = 'fadeIn 0.5s ease';
+        } else {
+            resultDiv.style.background = '#f0f0f0';
+            resultDiv.style.borderColor = '#ccc';
+            resultDiv.style.color = 'inherit';
         }
     };
     </script>
