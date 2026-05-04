@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Задачи по программированию</title>
     <style>
-        /* Простые стили для красоты */
+        /* ========== СБРОС И БАЗОВЫЕ СТИЛИ ========== */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -15,8 +15,8 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        
-        /* Шапка сайта */
+
+        /* ========== ШАПКА ========== */
         header {
             background-color: #333;
             color: white;
@@ -24,13 +24,12 @@
             text-align: center;
             position: relative;
         }
-        
-        /* Название сайта */
+
         h1 {
             margin: 0;
             font-size: 2.5em;
         }
-        
+
         /* Кнопка входа */
         .login-btn {
             position: absolute;
@@ -44,19 +43,41 @@
             font-weight: bold;
             transition: background-color 0.3s;
         }
-        
+
         .login-btn:hover {
             background-color: #45a049;
         }
-        
-        /* Меню с контестами */
+
+        /* ========== ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ ========== */
+        .user-info {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .user-info a {
+            color: #333;
+            text-decoration: none;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+
+        .user-info a:hover {
+            background: #e0e0e0;
+        }
+
+        /* ========== НАВИГАЦИЯ ПО КОНТЕСТАМ ========== */
         nav {
             background-color: #444;
             padding: 15px;
             text-align: center;
         }
-        
-        /* Стили для ссылок меню */
+
         nav a {
             color: white;
             text-decoration: none;
@@ -66,19 +87,19 @@
             border-radius: 5px;
             display: inline-block;
         }
-        
+
         nav a:hover {
             background-color: #666;
         }
-        
-        /* Основной контент */
+
+        /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
         main {
             padding: 20px;
             text-align: center;
             flex: 1;
         }
-        
-        /* Приветственный текст */
+
+        /* Приветственный блок */
         .welcome {
             background-color: white;
             padding: 30px;
@@ -86,7 +107,11 @@
             margin: 20px auto;
             max-width: 800px;
         }
-        
+
+        .welcome a {
+            color: #4CAF50;
+        }
+
         /* Список контестов */
         .contest-list {
             background-color: white;
@@ -95,20 +120,20 @@
             margin: 20px auto;
             max-width: 600px;
         }
-        
+
         .contest-list h2 {
             color: #333;
         }
-        
+
         .contest-list ul {
             list-style: none;
             padding: 0;
         }
-        
+
         .contest-list li {
             margin: 10px 0;
         }
-        
+
         .contest-list a {
             color: #333;
             text-decoration: none;
@@ -118,92 +143,76 @@
             background-color: #f0f0f0;
             border-radius: 5px;
         }
-        
+
         .contest-list a:hover {
             background-color: #e0e0e0;
         }
-        
-        /* Информация о пользователе (если залогинен) */
-        .user-info {
-            background: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-        }
-        
-        .user-info a {
-            color: #333;
-            text-decoration: none;
-            margin-left: 10px;
-            padding: 5px 10px;
-            background: #f0f0f0;
-            border-radius: 3px;
-        }
-        
-        .user-info a:hover {
-            background: #e0e0e0;
+
+        /* ========== ПОДВАЛ ========== */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- Шапка с названием сайта и кнопкой входа -->
+    <!-- ========== ШАПКА ========== -->
     <header>
         <h1>⚡ Решай задачи по программированию ⚡</h1>
-        
-        <!-- Кнопка входа (будет показываться если пользователь не залогинен) -->
         {% if not username %}
             <a href="/login" class="login-btn">🔑 Войти</a>
         {% endif %}
     </header>
-    
-    <!-- Информация о пользователе (если залогинен) -->
+
+    <!-- ========== ПРИВЕТСТВИЕ ПОЛЬЗОВАТЕЛЯ ========== -->
     {% if username %}
         <div style="text-align: center; margin-top: 20px;">
             <div class="user-info">
-                👤 Привет, {{ username }}! 
+                👤 Привет, {{ username }}!
                 <a href="/logout">Выйти</a>
             </div>
         </div>
     {% endif %}
-    
-    <!-- Меню для выбора контеста -->
+
+    <!-- ========== НАВИГАЦИЯ ПО КОНТЕСТАМ ========== -->
     <nav>
         <a href="/contest1">Контест 1</a>
         <a href="/contest2">Контест 2</a>
         <a href="/contest3">Контест 3</a>
-        <!-- <a href="/contest4">Контест 4</a>
-        <a href="/contest5">Контест 5</a> -->
+        <!-- <a href="/contest4">Контест 4</a> -->
+        <!-- <a href="/contest5">Контест 5</a> -->
     </nav>
-    
-    <!-- Основное содержание страницы -->
+
+    <!-- ========== ОСНОВНОЙ КОНТЕНТ ========== -->
     <main>
+        <!-- Приветственный блок -->
         <div class="welcome">
             <h2>Добро пожаловать!</h2>
             {% if username %}
                 <p>Рады видеть вас снова, {{ username }}!</p>
             {% else %}
-                <p>Пожалуйста, <a href="/login" style="color: #4CAF50;">войдите</a>, чтобы начать решать задачи.</p>
+                <p>Пожалуйста, <a href="/login">войдите</a>, чтобы начать решать задачи.</p>
             {% endif %}
             <p>Выберите контест из меню выше или из списка ниже:</p>
         </div>
-        
-        <!-- Альтернативный список контестов -->
+
+        <!-- Список доступных контестов -->
         <div class="contest-list">
             <h2>📋 Доступные контесты:</h2>
             <ul>
                 <li><a href="/contest1">🔹 Контест 1 - Задачи для начинающих</a></li>
                 <li><a href="/contest2">🔹 Контест 2 - Задачи для продвинутых</a></li>
                 <li><a href="/contest3">🔹 Контест 3 - Задачи повышенной сложности</a></li>
-                <!-- <li><a href="/contest4">🔹 Контест 4 - Алгоритмы сортировки</a></li>
-                <li><a href="/contest5">🔹 Контест 5 - Структуры данных</a></li> -->
+                <!-- <li><a href="/contest4">🔹 Контест 4 - Алгоритмы сортировки</a></li> -->
+                <!-- <li><a href="/contest5">🔹 Контест 5 - Структуры данных</a></li> -->
             </ul>
         </div>
     </main>
-    
-    <!-- Подвал сайта -->
-    <footer style="background-color: #333; color: white; padding: 10px; text-align: center;">
+
+    <!-- ========== ПОДВАЛ ========== -->
+    <footer>
         <p>© 2026 Решение задач по программированию</p>
     </footer>
 </body>

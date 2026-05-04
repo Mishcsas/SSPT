@@ -3,40 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контест 1 - Задачи</title>
+    <title>{{contest_name}}</title>
     <style>
-        /* Сброс отступов и установка высоты для html и body */
+        /* ========== СБРОС И БАЗОВЫЕ СТИЛИ ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         html, body {
-            height: 100%; /* Важно! Занимаем всю высоту окна */
+            height: 100%;
         }
-        
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Минимальная высота = вся высота окна */
+            min-height: 100vh;
         }
-        
+
+        /* ========== ШАПКА ========== */
         header {
             background-color: #333;
             color: white;
             padding: 20px;
             text-align: center;
-            flex-shrink: 0; /* Запрещаем сжиматься */
+            flex-shrink: 0;
         }
-        
+
         h1 {
             margin: 0;
             font-size: 2em;
         }
-        
+
+        /* ========== КНОПКА НАЗАД (ФИКСИРОВАННАЯ) ========== */
         .back-link {
             position: fixed;
             top: 20px;
@@ -47,23 +49,23 @@
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
-            transition: background-color 0.3s;
             font-size: 1em;
-            margin-top: 0;
-            z-index: 100; /* Чтобы ссылка была над всем */
+            transition: background-color 0.3s;
+            z-index: 100;
         }
-            
+
         .back-link:hover {
             background-color: #777;
         }
-        
+
+        /* ========== НАВИГАЦИЯ ПО КОНТЕСТАМ ========== */
         nav {
             background-color: #444;
             padding: 15px;
             text-align: center;
-            flex-shrink: 0; /* Запрещаем сжиматься */
+            flex-shrink: 0;
         }
-        
+
         nav a {
             color: white;
             text-decoration: none;
@@ -73,19 +75,21 @@
             border-radius: 5px;
             display: inline-block;
         }
-        
+
         nav a:hover {
             background-color: #666;
         }
-        
+
+        /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
         main {
             padding: 20px;
             max-width: 800px;
             margin: 0 auto;
-            width: 100%; /* Занимаем всю доступную ширину */
-            flex: 1 0 auto; /* Это ключевое! Занимает всё доступное пространство */
+            width: 100%;
+            flex: 1 0 auto;
         }
-        
+
+        /* ========== ИНФОРМАЦИЯ О КОНТЕСТЕ ========== */
         .contest-info {
             background-color: white;
             padding: 20px;
@@ -93,19 +97,21 @@
             margin-bottom: 20px;
             text-align: center;
         }
-        
+
+        /* ========== СПИСОК ЗАДАЧ ========== */
         .tasks-list {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
         }
-        
+
         .tasks-list h2 {
             color: #333;
             border-bottom: 2px solid #333;
             padding-bottom: 10px;
         }
-        
+
+        /* Карточка задачи */
         .task-item {
             margin: 15px 0;
             padding: 15px;
@@ -113,7 +119,18 @@
             border-radius: 5px;
             border-left: 4px solid #333;
         }
-        
+
+        /* Ссылка-обёртка для всей карточки */
+        .task-item-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .task-item-link:hover {
+            opacity: 0.8;
+        }
+
         .task-item a {
             color: #333;
             text-decoration: none;
@@ -121,17 +138,18 @@
             font-weight: bold;
             display: block;
         }
-        
+
         .task-item a:hover {
             color: #666;
         }
-        
+
         .task-desc {
             color: #666;
             margin-top: 5px;
             font-size: 0.9em;
         }
-        
+
+        /* ========== БЕЙДЖИ СЛОЖНОСТИ И СТАТУСА ========== */
         .difficulty {
             display: inline-block;
             padding: 3px 8px;
@@ -139,22 +157,24 @@
             font-size: 0.8em;
             margin-top: 8px;
         }
-        
+
+        /* Уровни сложности */
         .easy {
             background-color: #4CAF50;
             color: white;
         }
-        
+
         .medium {
             background-color: #FF9800;
             color: white;
         }
-        
+
         .hard {
             background-color: #f44336;
             color: white;
         }
 
+        /* Статусы задач */
         .task-item.solved {
             border-left: 4px solid #27ae60;
             background-color: #f0fff0;
@@ -176,60 +196,56 @@
         .difficulty.attempted-badge {
             background-color: #f39c12;
         }
-        
+
+        /* ========== ПОДВАЛ ========== */
         footer {
             background-color: #333;
             color: white;
             padding: 10px;
             text-align: center;
-            flex-shrink: 0; /* Запрещаем сжиматься */
+            flex-shrink: 0;
             width: 100%;
-        }
-        .task-item-link {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .task-item-link:hover {
-            /* добавьте стили при наведении по желанию */
-            opacity: 0.8;
         }
     </style>
 </head>
 <body>
+    <!-- ========== ШАПКА ========== -->
     <header>
         <h1>{{contest_name}}</h1>
         <a href="/" class="back-link">← На главную</a>
     </header>
-    
+
+    <!-- ========== НАВИГАЦИЯ ПО КОНТЕСТАМ ========== -->
     <nav>
         <a href="/contest1">Контест 1</a>
         <a href="/contest2">Контест 2</a>
         <a href="/contest3">Контест 3</a>
-        <!-- <a href="/contest4">Контест 4</a>
-        <a href="/contest5">Контест 5</a> -->
+        <!-- <a href="/contest4">Контест 4</a> -->
+        <!-- <a href="/contest5">Контест 5</a> -->
     </nav>
-    
+
+    <!-- ========== ОСНОВНОЙ КОНТЕНТ ========== -->
     <main>
+        <!-- Информация о контесте -->
         <div class="contest-info">
             <h3>{{contest_name}}</h3>
             <p>{{contest_info}}</p>
         </div>
-        
+
+        <!-- Список задач -->
         <div class="tasks-list">
             <h2>📋 Список задач:</h2>
-            
+
             <!-- Задача A -->
             {% if A_name %}
             <a href="{{A_ref}}" class="task-item-link">
                 <div class="task-item">
                     <div><b>{{A_name}}</b></div>
                     <div class="task-desc">{{A_info}}</div>
-                    <span class="difficulty 
-                    {% if A_score == 100 %}{{A_difficulty}}
-                    {% elif A_score > 0 and A_score < 100 %}attempted-badge
-                    {% else %}{{A_difficulty}}{% endif %}">
+                    <span class="difficulty
+                        {% if A_score == 100 %}{{A_difficulty}}
+                        {% elif A_score > 0 and A_score < 100 %}attempted-badge
+                        {% else %}{{A_difficulty}}{% endif %}">
                         {% if A_score == 100 %}✅ решено
                         {% elif A_score > 0 and A_score < 100 %}⚠️ {{A_score}}%
                         {% else %}{{A_difficulty}}{% endif %}
@@ -237,17 +253,17 @@
                 </div>
             </a>
             {% endif %}
-            
+
             <!-- Задача B -->
             {% if B_name %}
             <a href="{{B_ref}}" class="task-item-link">
                 <div class="task-item">
                     <div><b>{{B_name}}</b></div>
                     <div class="task-desc">{{B_info}}</div>
-                    <span class="difficulty 
-                    {% if B_score == 100 %}{{B_difficulty}}
-                    {% elif B_score > 0 and B_score < 100 %}attempted-badge
-                    {% else %}{{B_difficulty}}{% endif %}">
+                    <span class="difficulty
+                        {% if B_score == 100 %}{{B_difficulty}}
+                        {% elif B_score > 0 and B_score < 100 %}attempted-badge
+                        {% else %}{{B_difficulty}}{% endif %}">
                         {% if B_score == 100 %}✅ решено
                         {% elif B_score > 0 and B_score < 100 %}⚠️ {{B_score}}%
                         {% else %}{{B_difficulty}}{% endif %}
@@ -255,17 +271,17 @@
                 </div>
             </a>
             {% endif %}
-            
+
             <!-- Задача C -->
             {% if C_name %}
             <a href="{{C_ref}}" class="task-item-link">
                 <div class="task-item">
                     <div><b>{{C_name}}</b></div>
                     <div class="task-desc">{{C_info}}</div>
-                    <span class="difficulty 
-                    {% if C_score == 100 %}{{C_difficulty}}
-                    {% elif C_score > 0 and C_score < 100 %}attempted-badge
-                    {% else %}{{C_difficulty}}{% endif %}">
+                    <span class="difficulty
+                        {% if C_score == 100 %}{{C_difficulty}}
+                        {% elif C_score > 0 and C_score < 100 %}attempted-badge
+                        {% else %}{{C_difficulty}}{% endif %}">
                         {% if C_score == 100 %}✅ решено
                         {% elif C_score > 0 and C_score < 100 %}⚠️ {{C_score}}%
                         {% else %}{{C_difficulty}}{% endif %}
@@ -273,17 +289,17 @@
                 </div>
             </a>
             {% endif %}
-            
+
             <!-- Задача D -->
             {% if D_name %}
             <a href="{{D_ref}}" class="task-item-link">
                 <div class="task-item">
                     <div><b>{{D_name}}</b></div>
                     <div class="task-desc">{{D_info}}</div>
-                    <span class="difficulty 
-                    {% if D_score == 100 %}{{D_difficulty}}
-                    {% elif D_score > 0 and D_score < 100 %}attempted-badge
-                    {% else %}{{D_difficulty}}{% endif %}">
+                    <span class="difficulty
+                        {% if D_score == 100 %}{{D_difficulty}}
+                        {% elif D_score > 0 and D_score < 100 %}attempted-badge
+                        {% else %}{{D_difficulty}}{% endif %}">
                         {% if D_score == 100 %}✅ решено
                         {% elif D_score > 0 and D_score < 100 %}⚠️ {{D_score}}%
                         {% else %}{{D_difficulty}}{% endif %}
@@ -291,17 +307,17 @@
                 </div>
             </a>
             {% endif %}
-            
+
             <!-- Задача E -->
             {% if E_name %}
             <a href="{{E_ref}}" class="task-item-link">
                 <div class="task-item">
                     <div><b>{{E_name}}</b></div>
                     <div class="task-desc">{{E_info}}</div>
-                    <span class="difficulty 
-                    {% if E_score == 100 %}{{E_difficulty}}
-                    {% elif E_score > 0 and E_score < 100 %}attempted-badge
-                    {% else %}{{E_difficulty}}{% endif %}">
+                    <span class="difficulty
+                        {% if E_score == 100 %}{{E_difficulty}}
+                        {% elif E_score > 0 and E_score < 100 %}attempted-badge
+                        {% else %}{{E_difficulty}}{% endif %}">
                         {% if E_score == 100 %}✅ решено
                         {% elif E_score > 0 and E_score < 100 %}⚠️ {{E_score}}%
                         {% else %}{{E_difficulty}}{% endif %}
@@ -311,7 +327,8 @@
             {% endif %}
         </div>
     </main>
-    
+
+    <!-- ========== ПОДВАЛ ========== -->
     <footer>
         <p>© 2026 Решение задач по программированию</p>
     </footer>

@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Задача: сумма, разность, произведение</title>
+    <title>{{name}}</title>
     <style>
+        /* ========== СБРОС И БАЗОВЫЕ СТИЛИ ========== */
         * {
             margin: 0;
             padding: 0;
@@ -26,256 +27,60 @@
             width: 100%;
             background: white;
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
             padding: 32px 40px;
             margin: 20px 0;
         }
 
-        /* Заголовок задачи */
+        /* ========== КНОПКА НАЗАД ========== */
+        .back-to-contest {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #4a5f7a;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s;
+            border: 1px solid #5d7a9c;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .back-to-contest:hover {
+            background: #1d3b61;
+        }
+
+        .back-to-contest::before {
+            content: "←";
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        /* ========== ЗАГОЛОВОК ЗАДАЧИ ========== */
         .title-section {
             margin-bottom: 28px;
         }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
         .task-name {
             font-size: 2.4rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             color: #0b1f33;
             line-height: 1.2;
-            margin-bottom: 10px;
-        }
-        .limits {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 28px;
-            font-size: 1rem;
-            color: #4a5f7a;
-            border-bottom: 1px solid #dbe3ed;
-            padding-bottom: 18px;
-        }
-        .limits-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .limits-item .tag {
-            background: #e6ecf5;
-            padding: 4px 16px;
-            border-radius: 32px;
-            font-weight: 500;
-            color: #1d3b5c;
         }
 
-        /* Условие */
-        .problem-text {
-            background: #f7faff;
-            padding: 36px 40px;
-            border: 1px solid #d2dfef;
-            font-size: 1.3rem;
-            line-height: 1.6;
-            color: #112237;
-            margin: 24px 0 36px 0;
-            box-shadow: inset 0 2px 4px #cdd9eb;
-            min-height: 180px;
-            border-radius: 16px;
-        }
-
-        /* Тесты без скруглений */
-        .tests-row {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-        .test-card {
-            flex: 1 1 300px;
-            background: #ffffff;
-            border: 1px solid #cddbf0;
-            box-shadow: 0 6px 12px -8px #324a6b;
-            padding: 24px 28px;
-            border-radius: 0;
-        }
-        .test-header {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: #163457;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .test-header .badge {
-            background: #1d3b61;
-            color: white;
-            padding: 4px 18px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            border-radius: 30px;
-        }
-        .test-content {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .input-line, .output-line {
-            background: #f2f7ff;
-            border: 1px solid #bacde2;
-            padding: 12px 18px;
-            display: flex;
-            align-items: baseline;
-            border-radius: 0;
-        }
-        .input-line .label, .output-line .label {
-            min-width: 65px;
-            font-weight: 600;
-            color: #203e64;
-        }
-        .input-line .value, .output-line .value {
-            background: white;
-            padding: 6px 18px;
-            border: 1px solid #a7bcd9;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            flex: 1;
-            border-radius: 0;
-        }
-
-        /* Панель языков + файл */
-        .toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
-            background: #f2f7fe;
-            border-radius: 16px;
-            padding: 14px 26px;
-            margin-bottom: 28px;
-            border: 1px solid #ccddf5;
-        }
-        .lang-group {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .lang-group label {
-            font-weight: 600;
-            color: #1b3b60;
-        }
-        .radios {
-            display: flex;
-            gap: 16px;
-        }
-        .radios input[type="radio"] {
-            display: none;
-        }
-        .radios input[type="radio"] + label {
-            background: #dfe9f7;
-            padding: 8px 28px;
-            font-weight: 600;
-            color: #1d3b61;
-            cursor: pointer;
-            border: 1px solid transparent;
-            transition: 0.1s;
-            border-radius: 30px;
-        }
-        .radios input[type="radio"]:checked + label {
-            background: #1d3b61;
-            color: white;
-            border-color: #3765a3;
-        }
-        .file-block {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .file-btn {
-            background: white;
-            border: 1px solid #b0c9ed;
-            padding: 8px 28px;
-            font-weight: 600;
-            color: #1b3b60;
-            cursor: pointer;
-            border-radius: 30px;
-            display: inline-block;
-        }
-        .file-btn:hover {
-            background: #e6f0ff;
-        }
-        #file-name {
-            background: #e9f0fa;
-            padding: 6px 18px;
-            font-size: 0.95rem;
-            color: #1d3b61;
-            max-width: 240px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            border: 1px solid #b8cef0;
-            border-radius: 30px;
-        }
-
-        /* Поле кода */
-        .code-area {
-            margin-top: 16px;
-        }
-        .code-label {
-            font-weight: 700;
-            color: #163457;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            padding-left: 8px;
-        }
-        .code-input {
-            width: 100%;
-            min-height: 300px;
-            padding: 24px 28px;
-            background: #1e2638;
-            border: 2px solid #30496e;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 1rem;
-            line-height: 1.5;
-            color: #eef4ff;
-            resize: vertical;
-            outline: none;
-            border-radius: 16px;
-        }
-        .code-input:focus {
-            border-color: #6080b5;
-        }
-
-        /* Кнопка отправки */
-        .submit-area {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 24px;
-            margin-bottom: 8px;
-        }
-        .submit-btn {
-            background: #1d3b61;
-            color: white;
-            border: none;
-            padding: 14px 42px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: background 0.15s;
-            box-shadow: 0 8px 16px -6px #1d3b6180;
-            border: 1px solid #3f6090;
-        }
-        .submit-btn:hover {
-            background: #254e7a;
-        }
-        .submit-btn:active {
-            background: #123153;
-            transform: translateY(1px);
-        }
-
-        .footnote {
-            margin-top: 16px;
-            color: #506b92;
-            font-size: 0.9rem;
-            text-align: right;
-        }
         .solved-badge {
             display: inline-block;
             background: linear-gradient(135deg, #27ae60, #2ecc71);
@@ -290,45 +95,275 @@
             animation: fadeIn 0.5s ease;
         }
 
-        .task-header {
+        .limits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            font-size: 1rem;
+            color: #4a5f7a;
+            border-bottom: 1px solid #dbe3ed;
+            padding-bottom: 18px;
+        }
+
+        .limits-item {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 8px;
         }
-        .back-to-contest {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #4a5f7a;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 0.9rem;
+
+        .limits-item .tag {
+            background: #e6ecf5;
+            padding: 4px 16px;
+            border-radius: 32px;
             font-weight: 500;
-            transition: background 0.2s;
-            border: 1px solid #5d7a9c;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 100;
+            color: #1d3b5c;
         }
 
-.back-to-contest:hover {
-    background: #1d3b61;
-}
+        /* ========== ТЕКСТ УСЛОВИЯ ========== */
+        .problem-text {
+            background: #f7faff;
+            padding: 36px 40px;
+            border: 1px solid #d2dfef;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #112237;
+            margin: 24px 0 36px 0;
+            box-shadow: inset 0 2px 4px #cdd9eb;
+            min-height: 180px;
+            border-radius: 16px;
+        }
 
-.back-to-contest:before {
-    content: "←";
-    margin-right: 8px;
-    font-size: 1.2rem;
-}
+        /* ========== КАРТОЧКИ ТЕСТОВ ========== */
+        .tests-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .test-card {
+            flex: 1 1 300px;
+            background: #ffffff;
+            border: 1px solid #cddbf0;
+            box-shadow: 0 6px 12px -8px #324a6b;
+            padding: 24px 28px;
+            border-radius: 0;
+        }
+
+        .test-header {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #163457;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .test-header .badge {
+            background: #1d3b61;
+            color: white;
+            padding: 4px 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 30px;
+        }
+
+        .test-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-line,
+        .output-line {
+            background: #f2f7ff;
+            border: 1px solid #bacde2;
+            padding: 12px 18px;
+            display: flex;
+            align-items: baseline;
+            border-radius: 0;
+        }
+
+        .input-line .label,
+        .output-line .label {
+            min-width: 65px;
+            font-weight: 600;
+            color: #203e64;
+        }
+
+        .input-line .value,
+        .output-line .value {
+            background: white;
+            padding: 6px 18px;
+            border: 1px solid #a7bcd9;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            flex: 1;
+            border-radius: 0;
+        }
+
+        /* ========== ТУЛБАР (ЯЗЫК + ФАЙЛ) ========== */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: #f2f7fe;
+            border-radius: 16px;
+            padding: 14px 26px;
+            margin-bottom: 28px;
+            border: 1px solid #ccddf5;
+        }
+
+        .lang-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-group label {
+            font-weight: 600;
+            color: #1b3b60;
+        }
+
+        .radios {
+            display: flex;
+            gap: 16px;
+        }
+
+        .radios input[type="radio"] {
+            display: none;
+        }
+
+        .radios input[type="radio"] + label {
+            background: #dfe9f7;
+            padding: 8px 28px;
+            font-weight: 600;
+            color: #1d3b61;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.1s;
+            border-radius: 30px;
+        }
+
+        .radios input[type="radio"]:checked + label {
+            background: #1d3b61;
+            color: white;
+            border-color: #3765a3;
+        }
+
+        .file-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .file-btn {
+            background: white;
+            border: 1px solid #b0c9ed;
+            padding: 8px 28px;
+            font-weight: 600;
+            color: #1b3b60;
+            cursor: pointer;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        .file-btn:hover {
+            background: #e6f0ff;
+        }
+
+        #file-name {
+            background: #e9f0fa;
+            padding: 6px 18px;
+            font-size: 0.95rem;
+            color: #1d3b61;
+            max-width: 240px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border: 1px solid #b8cef0;
+            border-radius: 30px;
+        }
+
+        /* ========== РЕДАКТОР КОДА ========== */
+        .code-area {
+            margin-top: 16px;
+        }
+
+        .code-label {
+            font-weight: 700;
+            color: #163457;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            padding-left: 8px;
+        }
+
+        .code-input {
+            width: 100%;
+            min-height: 300px;
+            padding: 24px 28px;
+            background: #1e2638;
+            border: 2px solid #30496e;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #eef4ff;
+            resize: vertical;
+            outline: none;
+            border-radius: 16px;
+        }
+
+        .code-input:focus {
+            border-color: #6080b5;
+        }
+
+        /* ========== КНОПКА ОТПРАВКИ ========== */
+        .submit-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+
+        .submit-btn {
+            background: #1d3b61;
+            color: white;
+            border: none;
+            padding: 14px 42px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: background 0.15s;
+            box-shadow: 0 8px 16px -6px rgba(29, 59, 97, 0.5);
+            border: 1px solid #3f6090;
+        }
+
+        .submit-btn:hover {
+            background: #254e7a;
+        }
+
+        .submit-btn:active {
+            background: #123153;
+            transform: translateY(1px);
+        }
+
+        .footnote {
+            margin-top: 16px;
+            color: #506b92;
+            font-size: 0.9rem;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Кнопка возврата к списку задач -->
         <a href="/{{ contest }}" class="back-to-contest">К списку задач</a>
-        <!-- Название задачи + ограничения -->
+
+        <!-- ========== ЗАГОЛОВОК ========== -->
         <div class="title-section">
             <div class="task-header">
                 <div class="task-name">{{name}}</div>
@@ -344,12 +379,12 @@
             </div>
         </div>
 
-        <!-- Текст условия -->
+        <!-- ========== УСЛОВИЕ ЗАДАЧИ ========== -->
         <div class="problem-text">
             {{condition|safe}}
         </div>
 
-        <!-- Два теста -->
+        <!-- ========== ПРИМЕРЫ ТЕСТОВ ========== -->
         <div class="tests-row">
             <div class="test-card">
                 <div class="test-header">
@@ -357,8 +392,14 @@
                     <span>пример</span>
                 </div>
                 <div class="test-content">
-                    <div class="input-line"><span class="label">вход</span><span class="value">{{sample_in_1|safe}}</span></div>
-                    <div class="output-line"><span class="label">выход</span><span class="value">{{sample_out_1|safe}}</span></div>
+                    <div class="input-line">
+                        <span class="label">вход</span>
+                        <span class="value">{{sample_in_1|safe}}</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="label">выход</span>
+                        <span class="value">{{sample_out_1|safe}}</span>
+                    </div>
                 </div>
             </div>
             <div class="test-card">
@@ -367,23 +408,33 @@
                     <span>пример</span>
                 </div>
                 <div class="test-content">
-                    <div class="input-line"><span class="label">вход</span><span class="value">{{sample_in_2|safe}}</span></div>
-                    <div class="output-line"><span class="label">выход</span><span class="value">{{sample_out_2|safe}}</span></div>
+                    <div class="input-line">
+                        <span class="label">вход</span>
+                        <span class="value">{{sample_in_2|safe}}</span>
+                    </div>
+                    <div class="output-line">
+                        <span class="label">выход</span>
+                        <span class="value">{{sample_out_2|safe}}</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Форма отправки на /check -->
+        <!-- ========== ФОРМА ОТПРАВКИ ========== -->
         <form id="submit-form" action="/check" method="POST">
-            <!-- Выбор языка и загрузка файла -->
-            <input type="hidden" name="contest" value={{contest}}>
-            <input type="hidden" name="number" value={{number}}>
+            <input type="hidden" name="contest" value="{{contest}}">
+            <input type="hidden" name="number" value="{{number}}">
+
+            <!-- Тулбар: выбор языка и загрузка файла -->
             <div class="toolbar">
                 <div class="lang-group">
                     <label>Язык</label>
                     <div class="radios">
-                        <input type="radio" name="lang" id="py" value="py" checked><label for="py">Python</label>
-                        <input type="radio" name="lang" id="cpp" value="cpp"><label for="cpp">C++</label>
+                        <input type="radio" name="lang" id="py" value="py" checked>
+                        <label for="py">Python</label>
+
+                        <input type="radio" name="lang" id="cpp" value="cpp">
+                        <label for="cpp">C++</label>
                     </div>
                 </div>
                 <div class="file-block">
@@ -393,7 +444,7 @@
                 </div>
             </div>
 
-            <!-- Поле ввода кода -->
+            <!-- Редактор кода -->
             <div class="code-area">
                 <div class="code-label">⚡ Редактор</div>
                 <textarea class="code-input" id="code-editor" name="code" placeholder="код..."></textarea>
@@ -404,19 +455,29 @@
                 <button type="submit" class="submit-btn">Отправить на проверку</button>
             </div>
         </form>
-        
     </div>
 
+    <!-- ========== JAVASCRIPT ========== -->
     <script>
-        const fileInput = document.getElementById('file-input');
+        // ----------------------------------------------------------------
+        //  Элементы DOM
+        // ----------------------------------------------------------------
+        const fileInput   = document.getElementById('file-input');
         const fileNameSpan = document.getElementById('file-name');
-        const codeEditor = document.getElementById('code-editor');
+        const codeEditor  = document.getElementById('code-editor');
+        const submitForm  = document.getElementById('submit-form');
 
-        // Очищаем поле при загрузке
-        window.addEventListener('DOMContentLoaded', () => codeEditor.value = '');
+        // ----------------------------------------------------------------
+        //  Инициализация редактора
+        // ----------------------------------------------------------------
+        window.addEventListener('DOMContentLoaded', () => {
+            codeEditor.value = '';
+        });
 
-        // При выборе файла читаем и вставляем в textarea, а также обновляем имя
-        fileInput.addEventListener('change', function(e) {
+        // ----------------------------------------------------------------
+        //  Загрузка файла в редактор
+        // ----------------------------------------------------------------
+        fileInput.addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (!file) {
                 fileNameSpan.textContent = 'файл не выбран';
@@ -424,84 +485,84 @@
             }
             fileNameSpan.textContent = file.name + ' ✓';
             const reader = new FileReader();
-            reader.onload = (ev) => codeEditor.value = ev.target.result;
+            reader.onload = (ev) => {
+                codeEditor.value = ev.target.result;
+            };
             reader.readAsText(file);
         });
-        codeEditor.addEventListener('keydown', function(e) {
+
+        // ----------------------------------------------------------------
+        //  Обработка Tab в редакторе (вставка 4 пробелов)
+        // ----------------------------------------------------------------
+        codeEditor.addEventListener('keydown', function (e) {
             if (e.key === 'Tab') {
                 e.preventDefault();
-                
                 const start = this.selectionStart;
-                const end = this.selectionEnd;
-                
-                // Вставляем 4 пробела
+                const end   = this.selectionEnd;
                 this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
-                
-                // Ставим курсор после вставленных пробелов
                 this.selectionStart = this.selectionEnd = start + 4;
             }
         });
-    </script>
 
-    <script>
-    document.getElementById('submit-form').onsubmit = async function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        
-        // Создаем или находим div для результатов
-        let resultDiv = document.getElementById('result');
-        if (!resultDiv) {
-            resultDiv = document.createElement('div');
-            resultDiv.id = 'result';
-            resultDiv.style.marginTop = '20px';
-            resultDiv.style.padding = '15px';
-            resultDiv.style.background = '#f0f0f0';
-            resultDiv.style.border = '1px solid #ccc';
-            resultDiv.style.borderRadius = '5px';
-            resultDiv.style.whiteSpace = 'pre-wrap';
-            resultDiv.style.fontFamily = 'monospace';
-            this.parentNode.insertBefore(resultDiv, this.nextSibling);
-        }
-        
-        resultDiv.textContent = 'Проверка...';
-        
-        const response = await fetch('/check', {
-            method: 'POST',
-            body: formData
-        });
-        
-        const text = await response.text();
-        resultDiv.textContent = text;
-        if (text.trim() === '100') {
-            let solvedBadge = document.querySelector('.solved-badge');
-            const taskHeader = document.querySelector('.task-header');
-            
-            if (!solvedBadge) {
-                // Если бейджа нет, создаем его
-                solvedBadge = document.createElement('div');
-                solvedBadge.className = 'solved-badge';
-                solvedBadge.textContent = '✓ ЗАДАЧА РЕШЕНА';
-                taskHeader.appendChild(solvedBadge);
-            } else {
-                // Если бейдж уже есть, просто показываем его (на случай если он был скрыт)
-                solvedBadge.style.display = 'inline-block';
+        // ----------------------------------------------------------------
+        //  Отправка формы через AJAX
+        // ----------------------------------------------------------------
+        submitForm.onsubmit = async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            // Находим или создаём блок для вывода результата
+            let resultDiv = document.getElementById('result');
+            if (!resultDiv) {
+                resultDiv = document.createElement('div');
+                resultDiv.id = 'result';
+                resultDiv.style.cssText = [
+                    'margin-top: 20px;',
+                    'padding: 15px;',
+                    'background: #f0f0f0;',
+                    'border: 1px solid #ccc;',
+                    'border-radius: 5px;',
+                    'white-space: pre-wrap;',
+                    'font-family: monospace;'
+                ].join(' ');
+                this.parentNode.insertBefore(resultDiv, this.nextSibling);
             }
-            
-            // Опционально: показываем сообщение об успехе
-            resultDiv.style.background = '#d4edda';
-            resultDiv.style.borderColor = '#c3e6cb';
-            resultDiv.style.color = '#155724';
-            
-            // Можно добавить анимацию
-            solvedBadge.style.animation = 'fadeIn 0.5s ease';
-        } else {
-            resultDiv.style.background = '#f0f0f0';
-            resultDiv.style.borderColor = '#ccc';
-            resultDiv.style.color = 'inherit';
-        }
-    };
-    </script>
 
+            resultDiv.textContent = 'Проверка...';
+
+            const response = await fetch('/check', {
+                method: 'POST',
+                body: formData
+            });
+
+            const text = await response.text();
+            resultDiv.textContent = text;
+
+            // Обработка успешного решения
+            if (text.trim() === '100') {
+                const taskHeader = document.querySelector('.task-header');
+                let solvedBadge = document.querySelector('.solved-badge');
+
+                if (!solvedBadge) {
+                    solvedBadge = document.createElement('div');
+                    solvedBadge.className = 'solved-badge';
+                    solvedBadge.textContent = '✓ ЗАДАЧА РЕШЕНА';
+                    solvedBadge.style.animation = 'fadeIn 0.5s ease';
+                    taskHeader.appendChild(solvedBadge);
+                } else {
+                    solvedBadge.style.display = 'inline-block';
+                }
+
+                resultDiv.style.background = '#d4edda';
+                resultDiv.style.borderColor = '#c3e6cb';
+                resultDiv.style.color = '#155724';
+            } else {
+                resultDiv.style.background = '#f0f0f0';
+                resultDiv.style.borderColor = '#ccc';
+                resultDiv.style.color = 'inherit';
+            }
+        };
+    </script>
 </body>
 </html>
